@@ -1,0 +1,31 @@
+# Site settings
+title: AIUL - AI Usage License Project
+email: info@aiul-project.com
+description: >-
+  Standardizing AI usage in digital arts, empowering educators and students with clear AI usage guidelines.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Navigation
+navigation:
+  - {name: Home, link: '/'}
+  - {name: Licenses, link: '/licenses.html'}
+  - {name: Tagging, link: '/tagging.html'}
+  - {name: Tag Selector, link: '/tag-selector.html'}
+  - {name: Resources, link: '/resources.html'}

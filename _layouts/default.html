@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ "/assets/css/styles.css" | relative_url }}">
+  {% seo %}
+</head>
+<body>
+  {% include header.html %}
+  
+  {{ content }}
+  
+  {% include footer.html %}
+
+  {% if page.custom_js %}
+    {% for js_file in page.custom_js %}
+      <script src="{{ site.baseurl }}/assets/js/{{ js_file }}.js"></script>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>

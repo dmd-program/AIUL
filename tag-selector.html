@@ -1,0 +1,70 @@
+---
+layout: default
+title: Tag Selector
+custom_js: 
+  - tag-selector
+---
+
+<!-- Tag Selector Tool -->
+<section class="container" id="tag-selector">
+  <h2>AIUL Assignment Tag Selector</h2>
+  <p>Answer a few quick questions to determine the appropriate AIUL tag for your assignment.</p>
+  
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+  
+  <!-- Interactive Form -->
+  <form id="tagSelectorForm">
+    <!-- Step 1: Assignment Nature -->
+    <div class="form-group">
+      <label for="assignmentNature">What is the primary expectation for AI usage in this assignment?</label>
+      <div class="options">
+        <label><input type="radio" name="assignmentNature" value="no-ai" required>No AI Allowed</label>
+        <label><input type="radio" name="assignmentNature" value="limited-assistance">Limited AI Assistance (with instructor permission)</label>
+        <label><input type="radio" name="assignmentNature" value="research-only">AI for Research/Inspiration Only</label>
+        <label><input type="radio" name="assignmentNature" value="collaborative-tool">AI as a Collaborative Tool</label>
+        <label><input type="radio" name="assignmentNature" value="ai-assisted-creation">AI-Assisted Creation Permitted</label>
+        <label><input type="radio" name="assignmentNature" value="ai-integrated">AI-Integrated Assignment (required AI usage)</label>
+      </div>
+    </div>
+    
+    <!-- Step 2: AI Usage Requirement -->
+    <div class="form-group">
+      <label for="aiRequired">Is the use of AI tools required for this assignment?</label>
+      <div class="options">
+        <label><input type="radio" name="aiRequired" value="yes" required>Yes</label>
+        <label><input type="radio" name="aiRequired" value="no">No</label>
+      </div>
+    </div>
+    
+    <!-- Step 3: Media Type (Optional) -->
+    <div class="form-group">
+      <label for="mediaType">Which medium best describes the assignment? (Optional)</label>
+      <select name="mediaType" id="mediaType">
+        <option value="">Select a medium</option>
+        <option value="WR">Writing</option>
+        <option value="IM">Images</option>
+        <option value="VD">Video</option>
+        <option value="AU">Audio</option>
+        <option value="3D">3D Models/Animation</option>
+        <option value="TR">Traditional Art</option>
+        <option value="MX">Mixed Media</option>
+      </select>
+    </div>
+    
+    <button type="submit">Get Your Tag</button>
+  </form>
+  
+  <!-- Result Summary -->
+  <div class="summary" id="resultSummary" style="display:none;">
+    <h3>Your Recommended AIUL Tag: <span id="recommendedTag"></span></h3>
+    <p id="tagExplanation"></p>
+    <button id="downloadStatement">Download Syllabus Statement</button>
+    <button id="copyTag">Copy Tag</button>
+  </div>
+</section>

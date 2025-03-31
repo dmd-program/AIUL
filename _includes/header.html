@@ -1,0 +1,18 @@
+<!-- Header & Navigation -->
+<header>
+  <div class="logo">
+    <a href="{{ site.baseurl }}/">AIUL</a>
+  </div>
+  <nav>
+    <ul>
+      {% for item in site.navigation %}
+        <li><a href="{{ item.link | relative_url }}" {% if page.url == item.link %}class="active"{% endif %}>{{ item.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <div class="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
