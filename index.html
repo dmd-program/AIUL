@@ -3,101 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Usage License Selector</title>
+    <title>AI Usage License (AIUL) Framework for Digital Arts Courses</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --light-bg: #f3f4f6;
+            --border: #e5e7eb;
+            --text: #1f2937;
+            --text-light: #6b7280;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
         }
-        .container {
-            max-width: 600px;
-            background: white;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #fff;
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 20px;
-            margin: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        
         h1 {
-            font-size: 24px;
-            color: #333;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
         }
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
+        
+        .intro {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
         }
-        .statement {
-            background: #e8e8e8;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-top: 10px;
-            white-space: pre-wrap;
+        
+        .license-section {
+            margin-bottom: 2.5rem;
         }
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            margin-top: 10px;
+        
+        .license-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .license-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .license-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .license-code {
+            font-family: monospace;
+            font-weight: bold;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .license-content {
+            font-style: italic;
+            padding: 1rem;
+            background-color: var(--light-bg);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        
+        .license-content strong {
+            font-weight: bold;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 4px;
             cursor: pointer;
-            border-radius: 5px;
+            font-weight: 500;
+            border: none;
+            transition: all 0.2s ease;
         }
-        button:hover {
-            background: #0056b3;
+        
+        .btn-copy {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-copy:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-link {
+            background-color: var(--light-bg);
+            color: var(--text);
+        }
+        
+        .btn-link:hover {
+            background-color: var(--border);
+        }
+        
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.5rem;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        .tooltip.show {
+            opacity: 1;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        .implementation-notes {
+            margin-bottom: 2rem;
+        }
+        
+        .implementation-notes h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .implementation-notes ul {
+            padding-left: 1.5rem;
+        }
+        
+        @media (max-width: 640px) {
+            .license-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>AI Usage License Selector</h1>
-    <label for="aiul">Select AI Usage Level:</label>
-    <select id="aiul" onchange="updateStatement()">
-        <option value="AIUL-0">AIUL-0: No AI Usage Permitted</option>
-        <option value="AIUL-1">AIUL-1: Limited AI Assistance</option>
-        <option value="AIUL-2">AIUL-2: AI for Research & Inspiration Only</option>
-        <option value="AIUL-3">AIUL-3: AI as a Collaborative Tool</option>
-        <option value="AIUL-4">AIUL-4: AI-Assisted Creation Permitted</option>
-        <option value="AIUL-5">AIUL-5: AI-Integrated Assignments</option>
-        <option value="AIUL-∞">AIUL-∞: Open AI Use</option>
-    </select>
-
-    <div class="statement" id="statement"></div>
-    <button onclick="copyStatement()">Copy Statement</button>
-</div>
-
-<script>
-    const statements = {
-        "AIUL-0": "AI tools (e.g., ChatGPT, Midjourney, Runway, DALL·E) are NOT permitted in this course for any part of the assignments. All work must be fully created by the student without AI assistance. Using AI tools may result in academic integrity violations.",
-        "AIUL-1": "AI tools may be used ONLY with explicit instructor permission and must be documented in your process. If AI is used, students must include a statement describing how it was used. Unauthorized use of AI tools may result in grade penalties.",
-        "AIUL-2": "AI tools may be used for brainstorming, research, and idea generation only (e.g., gathering visual references, summarizing sources, or exploring themes). However, AI-generated content (text, images, audio, video, 3D models, etc.) MAY NOT be directly used in the final assignment. Students must cite AI sources when applicable.",
-        "AIUL-3": "AI tools may be used as a supporting tool for refining work, generating ideas, and assisting with technical aspects (e.g., grammar correction, color palette suggestions, audio enhancement). However, students must significantly contribute to and refine the final work beyond AI outputs. Students must document and credit their AI usage.",
-        "AIUL-4": "Students may incorporate AI-generated elements into their projects (e.g., AI-generated text, music, images, or animations), as long as they significantly modify or build upon them. The student should act as the creative director, making key artistic choices. All AI contributions must be clearly cited.",
-        "AIUL-5": "This course includes assignments that require the use of AI tools for creation, experimentation, or critique. Students will explore AI-generated content as part of their creative process and will be expected to document their methods and reflect on AI’s role in digital arts.",
-        "AIUL-∞": "Students are free to use AI tools without restrictions for any part of their assignments. While students are encouraged to acknowledge AI contributions, there are no penalties for AI-generated work. The focus of this course is on creative outcomes, regardless of the tools used."
-    };
-
-    function updateStatement() {
-        const selected = document.getElementById("aiul").value;
-        document.getElementById("statement").innerText = statements[selected];
-    }
-
-    function copyStatement() {
-        const text = document.getElementById("statement").innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            alert("Statement copied to clipboard!");
+    <header>
+        <h1>AI Usage License (AIUL) Framework for Digital Arts Courses</h1>
+        <p class="intro">Faculty can select one of the following AI Usage License (AIUL) levels to include in their syllabi. Each level has a short code for easy reference, similar to Creative Commons.</p>
+    </header>
+    
+    <main>
+        <section class="license-section">
+            <div class="license-card" id="aiul-0">
+                <div class="license-header">
+                    <h2 class="license-title">1. No AI Usage Permitted</h2>
+                    <span class="license-code">AIUL-0</span>
+                </div>
+                <div class="license-content">
+                    "AI tools (e.g., ChatGPT, Midjourney, Runway, DALL·E) are <strong>not permitted</strong> in this course for any part of the assignments. All work must be fully created by the student without AI assistance. Using AI tools may result in academic integrity violations."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+            
+            <div class="license-card" id="aiul-1">
+                <div class="license-header">
+                    <h2 class="license-title">2. Limited AI Assistance (Instructor Pre-Approval Required)</h2>
+                    <span class="license-code">AIUL-1</span>
+                </div>
+                <div class="license-content">
+                    "AI tools may be used <strong>only with explicit instructor permission</strong> and must be documented in your process. If AI is used, students must include a statement describing how it was used. Unauthorized use of AI tools may result in grade penalties."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+            
+            <div class="license-card" id="aiul-2">
+                <div class="license-header">
+                    <h2 class="license-title">3. AI for Research & Inspiration Only</h2>
+                    <span class="license-code">AIUL-2</span>
+                </div>
+                <div class="license-content">
+                    "AI tools may be used <strong>for brainstorming, research, and idea generation only</strong> (e.g., gathering visual references, summarizing sources, or exploring themes). However, AI-generated content (text, images, audio, video, 3D models, etc.) <strong>may not be directly used</strong> in the final assignment. Students must cite AI sources when applicable."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+            
+            <div class="license-card" id="aiul-3">
+                <div class="license-header">
+                    <h2 class="license-title">4. AI as a Collaborative Tool (Student-Created Work Required)</h2>
+                    <span class="license-code">AIUL-3</span>
+                </div>
+                <div class="license-content">
+                    "AI tools may be used <strong>as a supporting tool</strong> for refining work, generating ideas, and assisting with technical aspects (e.g., grammar correction, color palette suggestions, audio enhancement). However, students must <strong>significantly contribute to and refine the final work</strong> beyond AI outputs. Students must document and credit their AI usage."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+            
+            <div class="license-card" id="aiul-4">
+                <div class="license-header">
+                    <h2 class="license-title">5. AI-Assisted Creation Permitted (Student as Director)</h2>
+                    <span class="license-code">AIUL-4</span>
+                </div>
+                <div class="license-content">
+                    "Students may incorporate AI-generated elements into their projects (e.g., AI-generated text, music, images, or animations), <strong>as long as they significantly modify or build upon them</strong>. The student should act as the creative director, making key artistic choices. All AI contributions must be clearly cited."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+            
+            <div class="license-card" id="aiul-5">
+                <div class="license-header">
+                    <h2 class="license-title">6. AI-Integrated Assignments (Required AI Usage)</h2>
+                    <span class="license-code">AIUL-5</span>
+                </div>
+                <div class="license-content">
+                    "This course includes assignments that <strong>require the use of AI tools</strong> for creation, experimentation, or critique. Students will explore AI-generated content as part of their creative process and will be expected to document their methods and reflect on AI's role in digital arts."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+            
+            <div class="license-card" id="aiul-infinity">
+                <div class="license-header">
+                    <h2 class="license-title">7. Open AI Use (No Restrictions)</h2>
+                    <span class="license-code">AIUL-∞</span>
+                </div>
+                <div class="license-content">
+                    "Students are free to use AI tools <strong>without restrictions</strong> for any part of their assignments. While students are encouraged to acknowledge AI contributions, there are no penalties for AI-generated work. The focus of this course is on creative outcomes, regardless of the tools used."
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-copy" data-target="#aiul-infinity">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        Copy Text
+                    </button>
+                    <button class="btn btn-link" data-link="AIUL-infinity">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Get Link
+                    </button>
+                </div>
+                <div class="tooltip">Copied!</div>
+            </div>
+        </section>
+        
+        <section class="implementation-notes">
+            <h2>Implementation Notes</h2>
+            <ul>
+                <li>Faculty can modify these statements to fit their courses.</li>
+                <li>Consider adding an AI usage disclosure requirement for transparency.</li>
+                <li>Similar to Creative Commons, faculty can list "AIUL-[level]" in their syllabus or assignment sheets to easily communicate the policy.</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>AI Usage License (AIUL) Framework for Digital Arts Courses - Share and adapt the framework to suit your institutional needs.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Copy button functionality
+            const copyButtons = document.querySelectorAll('.btn-copy');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const licenseContent = document.querySelector(`${targetId} .license-content`).textContent.trim();
+                    
+                    navigator.clipboard.writeText(licenseContent).then(() => {
+                        const tooltip = this.parentElement.nextElementSibling;
+                        tooltip.classList.add('show');
+                        tooltip.style.left = `${this.offsetLeft + this.offsetWidth/2 - tooltip.offsetWidth/2}px`;
+                        tooltip.style.top = `${this.offsetTop - tooltip.offsetHeight - 5}px`;
+                        
+                        setTimeout(() => {
+                            tooltip.classList.remove('show');
+                        }, 2000);
+                    });
+                });
+            });
+            
+            // Link button functionality
+            const linkButtons = document.querySelectorAll('.btn-link');
+            
+            linkButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const licenseCode = this.getAttribute('data-link');
+                    const currentUrl = window.location.href.split('#')[0];
+                    const licenseUrl = `${currentUrl}#${licenseCode.toLowerCase()}`;
+                    
+                    navigator.clipboard.writeText(licenseUrl).then(() => {
+                        const tooltip = this.parentElement.nextElementSibling;
+                        tooltip.textContent = 'Link copied!';
+                        tooltip.classList.add('show');
+                        tooltip.style.left = `${this.offsetLeft + this.offsetWidth/2 - tooltip.offsetWidth/2}px`;
+                        tooltip.style.top = `${this.offsetTop - tooltip.offsetHeight - 5}px`;
+                        
+                        setTimeout(() => {
+                            tooltip.classList.remove('show');
+                            tooltip.textContent = 'Copied!';
+                        }, 2000);
+                    });
+                });
+            });
+            
+            // Handle direct link navigation
+            if (window.location.hash) {
+                const targetElement = document.querySelector(window.location.hash);
+                if (targetElement) {
+                    targetElement.scrollIntoView();
+                    targetElement.style.animation = 'highlight 2s';
+                }
+            }
         });
-    }
-
-    // Initialize with first statement
-    updateStatement();
-</script>
-
+    </script>
 </body>
 </html>
