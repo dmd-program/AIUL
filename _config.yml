@@ -1,9 +1,9 @@
 # Site settings
 title: AIUL - AI Usage License Project
-email: info@aiul-project.com
+email:
 description: >-
   Standardizing AI usage in digital arts, empowering educators and students with clear AI usage guidelines.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "aiul" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
