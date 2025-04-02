@@ -2,21 +2,13 @@
 layout: default
 title: Tag Selector
 custom_js: 
+  - html2canvas
   - tag-selector
 ---
 
 <!-- Tag Selector Tool -->
 <section class="container" id="tag-selector">
   <h2>AIUL Assignment Tag Selector</h2>
-  <p>Answer a few quick questions to determine the appropriate AIUL tag for your assignment.</p>
-  
-  <!-- Progress Bar -->
-  <div class="progress-bar">
-    <div class="progress-step active"></div>
-    <div class="progress-step"></div>
-    <div class="progress-step"></div>
-    <div class="progress-step"></div>
-  </div>
   
   <!-- Interactive Form -->
   <form id="tagSelectorForm">
@@ -32,15 +24,7 @@ custom_js:
         <label><input type="radio" name="assignmentNature" value="ai-integrated">AI-Integrated Assignment (required AI usage)</label>
       </div>
     </div>
-    
-    <!-- Step 2: AI Usage Requirement -->
-    <div class="form-group">
-      <label for="aiRequired">Is the use of AI tools required for this assignment?</label>
-      <div class="options">
-        <label><input type="radio" name="aiRequired" value="yes" required>Yes</label>
-        <label><input type="radio" name="aiRequired" value="no">No</label>
-      </div>
-    </div>
+
     
     <!-- Step 3: Media Type (Optional) -->
     <div class="form-group">
@@ -64,7 +48,28 @@ custom_js:
   <div class="summary" id="resultSummary" style="display:none;">
     <h3>Your Recommended AIUL Tag: <span id="recommendedTag"></span></h3>
     <p id="tagExplanation"></p>
-    <button id="downloadStatement">Download Syllabus Statement</button>
-    <button id="copyTag">Copy Tag</button>
+    
+    <!-- Tag Preview Section (Similar to Tag Generator) -->
+    <div class="tag-preview-section">
+      <h4>Tag Preview</h4>
+      <div class="tag-preview">
+        <div id="tagContainer" class="tag-size-medium">
+          <div class="tag-main">
+            <span class="tag-text">AIUL-1</span>
+          </div>
+          <div class="tag-modifier" style="display:none;">
+            <span class="modifier-text">WR</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="download-options">
+        <button id="downloadPNG">Download PNG</button>
+        <button id="downloadSVG">Download SVG</button>
+        <button id="copyTag">Copy Tag</button>
+        <button id="downloadStatement">Download Syllabus Statement</button>
+        <div class="download-message"></div>
+      </div>
+    </div>
   </div>
 </section>

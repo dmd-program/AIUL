@@ -1,0 +1,190 @@
+/* Tag Generator Styles */
+.generator-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .generator-controls {
+    flex: 1;
+    min-width: 300px;
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: $psu-blue;
+      }
+      
+      .tag-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid $psu-light-blue;
+        border-radius: 4px;
+        font-family: 'Roboto', sans-serif;
+      }
+    }
+  }
+  
+  .generator-preview {
+    flex: 1;
+    min-width: 300px;
+    
+    #tagPreview {
+      background-color: $psu-white;
+      padding: 2rem;
+      border: 1px solid $psu-light-gray;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 150px;
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  /* Tag Styling */
+  #tagContainer {
+    display: inline-flex;
+    font-family: 'Kanit', sans-serif;
+    max-width: 100%;
+    color:#000;
+
+  }
+  
+  .tag-main {
+    background-color: white;
+    border: 8px solid black;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  
+  .tag-text {
+    font-weight: 700; /* Bold */
+    font-size: 2rem;
+    white-space: nowrap;
+  }
+  
+  .tag-modifier {
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid black;
+    box-sizing: border-box;
+  }
+  
+  .modifier-text {
+    font-weight: 300; /* Light */
+    font-size: 2rem;
+    white-space: nowrap;
+  }
+  
+  /* Size variations */
+  .tag-size-small {
+    .tag-text, .modifier-text {
+      font-size: 1.5rem;
+    }
+    
+    .tag-main, .tag-modifier {
+      padding: 0.3rem 1rem;
+    }
+    
+    .tag-main, .tag-modifier {
+      border-width: 6px;
+    }
+  }
+  
+  .tag-size-medium {
+    .tag-text, .modifier-text {
+      font-size: 2rem;
+    }
+    
+    .tag-main, .tag-modifier {
+      padding: 0.5rem 1.5rem;
+    }
+    
+    .tag-main, .tag-modifier {
+      border-width: 8px;
+    }
+  }
+  
+  .tag-size-large {
+    .tag-text, .modifier-text {
+      font-size: 3rem;
+    }
+    
+    .tag-main, .tag-modifier {
+      padding: 0.7rem 2rem;
+    }
+    
+    .tag-main, .tag-modifier {
+      border-width: 12px;
+    }
+  }
+  
+  .download-options {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    
+    button {
+      flex: 1;
+      min-width: 160px;
+      
+      &:disabled {
+        background-color: $psu-light-gray;
+        color: $psu-gray;
+        cursor: not-allowed;
+      }
+    }
+    
+    .download-message {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      
+      &.success {
+        background-color: rgba(0, 128, 0, 0.1);
+        color: green;
+      }
+      
+      &.error {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: red;
+      }
+    }
+  }
+  
+  .explanation {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $psu-light-blue;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .generator-container {
+      flex-direction: column;
+    }
+    
+    .tag-size-large {
+      .tag-text, .modifier-text {
+        font-size: 2.5rem;
+      }
+      
+      .tag-main, .tag-modifier {
+        padding: 0.6rem 1.5rem;
+      }
+    }
+  }

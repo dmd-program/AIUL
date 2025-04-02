@@ -7,6 +7,9 @@ $psu-gray: #444444;
 $psu-light-gray: #F2F2F2;
 $psu-white: #FFFFFF;
 
+/* Import tag generator styles */
+@import "tag-generator";
+
 /* Base styling */
 body {
   font-family: 'Roboto', sans-serif;
@@ -319,16 +322,71 @@ button {
     border-radius: 4px;
   }
   
-  button {
-    margin-top: 1rem;
-    margin-right: 0.5rem;
+  .tag-preview-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($psu-light-blue, 0.5);
     
-    &#downloadStatement {
-      background-color: $psu-blue;
+    h4 {
+      color: $psu-medium-blue;
+      margin-bottom: 1rem;
+    }
+  }
+  
+  .tag-preview {
+    background-color: $psu-white;
+    padding: 1.5rem;
+    border: 1px solid $psu-light-gray;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .download-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    
+    button {
+      flex: 1;
+      min-width: 150px;
+      margin-bottom: 0.5rem;
     }
     
-    &#copyTag {
+    button#downloadPNG, button#downloadSVG {
+      background-color: $psu-blue;
+      min-width: 130px;
+    }
+    
+    button#copyTag {
       background-color: $psu-medium-blue;
+      min-width: 130px;
+    }
+    
+    button#downloadStatement {
+      background-color: $psu-yellow;
+      color: $psu-blue;
+      min-width: 200px;
+    }
+    
+    .download-message {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      
+      &.success {
+        background-color: rgba(0, 128, 0, 0.1);
+        color: green;
+      }
+      
+      &.error {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: red;
+      }
     }
   }
 }

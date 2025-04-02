@@ -1,0 +1,102 @@
+---
+layout: default
+title: AIUL Tag Generator
+custom_js: 
+  - html2canvas
+  - tag-generator
+---
+
+<div class="page-content">
+  <h2>AIUL Tag Generator</h2>
+  <p>Create custom AIUL tag graphics for different assignment types and media formats. These tags can be used in your syllabus, assignment instructions, or other course materials.</p>
+  
+  <div class="generator-container">
+    <div class="generator-controls">
+      <h3>Configure Your Tag</h3>
+      
+      <div class="form-group">
+        <label for="tagType">AIUL License Level:</label>
+        <select id="tagType" class="tag-select">
+          {% for license in site.licenses %}
+          <option value="{{ license.title | remove: 'AIUL-' }}">{{ license.title }} ({{ license.full_name }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="useModifier">Include Media Modifier?</label>
+        <input type="checkbox" id="useModifier">
+      </div>
+      
+      <div class="form-group modifier-group" style="display: none;">
+        <label for="modifierType">Media Type:</label>
+        <select id="modifierType" class="tag-select">
+          {% for modifier in site.modifiers %}
+          <option value="{{ modifier.title }}">{{ modifier.title }} ({{ modifier.full_name }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="tagSize">Tag Size:</label>
+        <select id="tagSize" class="tag-select">
+          <option value="small">Small</option>
+          <option value="medium" selected>Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </div>
+      
+      <button id="generateTag">Generate Tag</button>
+    </div>
+    
+    <div class="generator-preview">
+      <h3>Preview</h3>
+      <div id="tagPreview">
+        <div id="tagContainer">
+          <div class="tag-main">
+            <span class="tag-text">AIUL-NA</span>
+          </div>
+          <div class="tag-modifier" style="display:none;">
+            <span class="modifier-text">WR</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="download-options">
+        <button id="downloadPNG" disabled>Download PNG</button>
+        <button id="downloadSVG" disabled>Download SVG</button>
+        <div class="download-message"></div>
+      </div>
+      
+      <div class="font-notice" style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+        <p><strong>Note:</strong> For best results, click "Generate Tag" before downloading. The generated files use the Kanit font. If the font doesn't appear correctly in your downloads, try refreshing the page to ensure the font is fully loaded.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- New section for syllabus language -->
+  <div id="syllabusLanguage" style="display: none; margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem;">
+    <h3>Sample Syllabus Language</h3>
+    <div class="syllabus-content">
+      <div style="background: #f5f5f5; padding: 1.5rem; border-left: 4px solid #0f4c81; margin: 1rem 0;">
+        <p id="syllabusText"></p>
+      </div>
+      <button id="copySyllabus" class="secondary-button">Copy to Clipboard</button>
+    </div>
+  </div>
+  
+  <div class="explanation">
+    <h3>About AIUL Tags</h3>
+    <p>AIUL (AI Usage License) tags provide a clear, standardized way to communicate expectations around AI tool usage in educational assignments. Each tag indicates a specific level of permitted AI usage, from completely prohibited (AIUL-NA) to fully integrated (AIUL-IU).</p>
+    
+    <h4>Optional Media-Specific Suffixes</h4>
+    <p>Media-specific suffixes provide additional clarity for different types of assignments:</p>
+    <ul>
+      {% for modifier in site.modifiers %}
+      <li><strong>{{ modifier.title }}</strong> - {{ modifier.full_name }}</li>
+      {% endfor %}
+    </ul>
+    
+    <p>For more information about AIUL tags and implementation guidelines, please visit our <a href="{{ '/licenses.html' | relative_url }}">Licenses</a> and <a href="{{ '/tagging.html' | relative_url }}">Tagging</a> pages.</p>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+<div class="license-page">
+  <h1>{{ page.title }} <span class="license-full-name">({{ page.full_name }})</span></h1>
+  
+  {{ content }}
+  
+  <div class="license-meta">
+    <p><strong>Description:</strong> {{ page.description }}</p>
+    <p><strong>Example Use Cases:</strong> {{ page.example }}</p>
+  </div>
+  
+  <p><a href="{{ '/licenses.html' | relative_url }}">&larr; Back to all licenses</a></p>
+</div>

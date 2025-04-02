@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+<div class="modifier-page">
+  <h1>{{ page.title }} <span class="modifier-full-name">({{ page.full_name }})</span></h1>
+  
+  {{ content }}
+  
+  <div class="modifier-meta">
+    <p><strong>Description:</strong> {{ page.description }}</p>
+    <p><strong>Example Use Cases:</strong> {{ page.example }}</p>
+  </div>
+  
+  <p><a href="{{ '/tagging.html' | relative_url }}">&larr; Back to tagging guidelines</a></p>
+</div>
