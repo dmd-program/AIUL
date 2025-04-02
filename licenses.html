@@ -29,6 +29,31 @@ title: AIUL Licenses
     </tbody>
   </table>
   
+  <h3>Choosing Media-Specific Suffixes</h3>
+  
+  <p>Media-specific suffixes help clarify which types of AI tools are relevant to the assignment:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Suffix</th>
+        <th>Description</th>
+        <th>Example Use Cases</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for modifier in site.modifiers %}
+      <tr>
+        <td><strong>-{{ modifier.title }}</strong> ({{ modifier.full_name }})</td>
+        <td>{{ modifier.description }}</td>
+        <td>{{ modifier.example }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p>If an assignment involves multiple media types but focuses primarily on one, you can use the primary media suffix. For more complex assignments, the <strong>-MX</strong> suffix is appropriate.</p>
+
   <h3>Examples of Combined Tags</h3>
   
   <ul>
@@ -40,5 +65,5 @@ title: AIUL Licenses
   </ul>
   
   <h3>Implementation Resources</h3>
-  <p>For detailed implementation guidelines and syllabus language, please visit our <a href="{{ '/resources.html' | relative_url }}">Resources</a> page. To determine the appropriate tag for your assignment, try our <a href="{{ '/tag-selector.html' | relative_url }}">Tag Selector Tool</a>.</p>
+  <p>For detailed implementation guidelines and syllabus language, please visit our <a href="{{ '/resources.html' | relative_url }}">Resources</a> page. To determine the appropriate tag for your assignment, try our <a href="{{ '/tag-generator.html' | relative_url }}">Tag Generator</a>.</p>
 </div>

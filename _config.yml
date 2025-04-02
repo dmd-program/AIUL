@@ -26,8 +26,7 @@ exclude:
 navigation:
   - {name: Home, link: '/'}
   - {name: Licenses, link: '/licenses.html'}
-  - {name: Tagging, link: '/tagging.html'}
-  - {name: Tag Selector, link: '/tag-selector.html'}
+  - {name: Guide, link: '/guide.html'}
   - {name: Tag Generator, link: '/tag-generator.html'}
   - {name: Resources, link: '/resources.html'}
 

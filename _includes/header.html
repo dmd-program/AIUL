@@ -1,8 +1,15 @@
 <!-- Header & Navigation -->
 <header>
-  <div class="logo">
+  <div class="logo tag-text">
     <a href="{{ site.baseurl }}/">AIUL</a>
   </div>
+  <input type="checkbox" id="menu-toggle-checkbox" class="menu-toggle-checkbox">
+  <label for="menu-toggle-checkbox" class="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+  
   <nav>
     <ul>
       {% for item in site.navigation %}
@@ -10,9 +17,4 @@
       {% endfor %}
     </ul>
   </nav>
-  <div class="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
 </header>
