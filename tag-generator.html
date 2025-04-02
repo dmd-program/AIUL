@@ -51,8 +51,9 @@ custom_js:
     
     <div class="generator-preview">
       <h3>Preview</h3>
+      <!-- Make sure this element structure is correctly structured for the JS to update -->
       <div id="tagPreview">
-        <div id="tagContainer">
+        <div id="tagContainer" class="tag-size-medium">
           <div class="tag-main">
             <span class="tag-text">AIUL-NA</span>
           </div>
@@ -74,7 +75,7 @@ custom_js:
     </div>
   </div>
   
-  <!-- New section for syllabus language -->
+  <!-- Syllabus language section -->
   <div id="syllabusLanguage" style="display: none; margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem;">
     <h3>Sample Syllabus Language</h3>
     <div class="syllabus-content">
@@ -85,7 +86,7 @@ custom_js:
     </div>
   </div>
   
-  <!-- <div class="explanation">
+  <div class="explanation">
     <h3>About AIUL Tags</h3>
     <p>AIUL (AI Usage License) tags provide a clear, standardized way to communicate expectations around AI tool usage in educational assignments. Each tag indicates a specific level of permitted AI usage, from completely prohibited (AIUL-NA) to fully integrated (AIUL-IU).</p>
     
@@ -97,6 +98,6 @@ custom_js:
       {% endfor %}
     </ul>
     
-    <p>For more information about AIUL tags and implementation guidelines, please visit our <a href="{{ '/licenses.html' | relative_url }}">Licenses</a> and <a href="{{ '/tagging.html' | relative_url }}">Tagging</a> pages.</p>
-  </div> -->
+    <p>For more information about AIUL tags and implementation guidelines, please visit our <a href="{{ '/licenses.html' | relative_url }}">Licenses</a> and <a href="{{ '/tagging.html' | relative_url }}">Usage Guidelines</a> pages.</p>
+  </div>
 </div>

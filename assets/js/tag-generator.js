@@ -20,17 +20,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadPNGButton = document.getElementById('downloadPNG');
     const downloadSVGButton = document.getElementById('downloadSVG');
     
-    const tagContainer = document.getElementById('tagContainer');
-    const tagMain = document.querySelector('.tag-main');
-    const tagText = document.querySelector('.tag-text');
-    const tagModifier = document.querySelector('.tag-modifier');
-    const modifierText = document.querySelector('.modifier-text');
+    let tagContainer = document.getElementById('tagContainer');
+    let tagMain = document.querySelector('.tag-main');
+    let tagText = document.querySelector('.tag-text');
+    let tagModifier = document.querySelector('.tag-modifier');
+    let modifierText = document.querySelector('.modifier-text');
     const downloadMessage = document.querySelector('.download-message');
     
     // Get the syllabus language elements
     const syllabusLanguage = document.getElementById('syllabusLanguage');
     const syllabusText = document.getElementById('syllabusText');
     const copySyllabus = document.getElementById('copySyllabus');
+
+    // Debug log to check initial values
+    console.log('Initial tag type value:', tagTypeSelect.value);
+    console.log('Initial select options:', Array.from(tagTypeSelect.options).map(o => o.value));
 
     // Initialize with default values
     updateTagText(tagTypeSelect.value);
@@ -42,19 +46,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Event listeners
     useModifierCheckbox.addEventListener('change', function() {
+        // Show/hide the modifier selection dropdown
         modifierGroup.style.display = this.checked ? 'block' : 'none';
-        tagModifier.style.display = this.checked ? 'flex' : 'none';
+        
+        // Log the change for debugging
+        console.log('Media modifier checkbox changed to:', this.checked);
+        
+        // Force a complete preview recreation
         updatePreview();
+        
+        // Add a visual indicator that the preview has been updated
+        const tagPreview = document.getElementById('tagPreview');
+        tagPreview.style.transition = 'all 0.3s ease';
+        tagPreview.style.backgroundColor = this.checked ? 'rgba(0, 255, 0, 0.1)' : 'rgba(255, 255, 0, 0.1)';
+        
+        setTimeout(function() {
+            tagPreview.style.backgroundColor = '';
+        }, 500);
     });
     
     tagTypeSelect.addEventListener('change', function() {
+        console.log('License changed to:', this.value);
         updateTagText(this.value);
         updatePreview();
     });
     
     modifierTypeSelect.addEventListener('change', function() {
-        updateModifierText(this.value);
+        console.log('Modifier type changed to:', this.value);
+        
+        // Force a complete preview recreation immediately
         updatePreview();
+        
+        // Visual feedback for the change
+        const tagPreview = document.getElementById('tagPreview');
+        tagPreview.style.transition = 'all 0.3s ease';
+        tagPreview.style.backgroundColor = 'rgba(0, 0, 255, 0.1)';
+        
+        setTimeout(function() {
+            tagPreview.style.backgroundColor = '';
+        }, 500);
     });
     
     // Force update preview when size changes
@@ -95,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             syllabusLanguage.scrollIntoView({ behavior: 'smooth' });
         }, 100);
     });
+    
     // Copy to clipboard functionality
     copySyllabus.addEventListener('click', function() {
         navigator.clipboard.writeText(syllabusText.textContent)
@@ -106,6 +137,124 @@ document.addEventListener('DOMContentLoaded', function() {
                 showMessage('Failed to copy to clipboard. Please try again.', 'error');
             });
     });
+    
+    downloadPNGButton.addEventListener('click', function() {
+        downloadAsPNG();
+    });
+    
+    downloadSVGButton.addEventListener('click', function() {
+        downloadAsSVG();
+    });
+    
+    // Functions
+    function updateTagText(value) {
+        // Make sure the tag text is being set correctly
+        const newText = 'AIUL-' + value;
+        tagText.textContent = newText;
+        console.log('Tag text updated to:', newText);
+    }
+    
+    function updateModifierText(value) {
+        modifierText.textContent = value;
+    }
+    
+    function updateTagSize(size) {
+        // Remove all size classes
+        tagContainer.classList.remove('tag-size-small', 'tag-size-medium', 'tag-size-large');
+        
+        // Add the selected size class
+        tagContainer.classList.add('tag-size-' + size);
+    }
+    
+    function updatePreview() {
+        // Get the current values
+        const licenseCode = tagTypeSelect.value;
+        const useModifier = useModifierCheckbox.checked;
+        const modifierValue = modifierTypeSelect.value;
+        const tagSize = tagSizeSelect.value;
+        
+        console.log('Recreating preview with:', 'AIUL-' + licenseCode);
+        
+        // Get the parent container where the tag preview lives
+        const tagPreview = document.getElementById('tagPreview');
+        
+        // Create a completely new tag container
+        const newTagContainer = document.createElement('div');
+        newTagContainer.id = 'tagContainer';
+        newTagContainer.className = 'tag-size-' + tagSize;
+        
+        // Create the main tag element
+        const newTagMain = document.createElement('div');
+        newTagMain.className = 'tag-main';
+        newTagMain.style.backgroundColor = 'white';
+        newTagMain.style.border = getBorderWidth() + 'px solid black';
+        newTagMain.style.boxSizing = 'border-box';
+        
+        // Create the tag text
+        const newTagText = document.createElement('span');
+        newTagText.className = 'tag-text';
+        newTagText.textContent = 'AIUL-' + licenseCode;
+        newTagMain.appendChild(newTagText);
+        
+        // Add the main tag to the container
+        newTagContainer.appendChild(newTagMain);
+        
+        // Create the modifier if needed
+        if (useModifier) {
+            const newTagModifier = document.createElement('div');
+            newTagModifier.className = 'tag-modifier';
+            newTagModifier.style.display = 'flex';
+            newTagModifier.style.backgroundColor = 'black';
+            newTagModifier.style.color = 'white';
+            newTagModifier.style.border = getBorderWidth() + 'px solid black';
+            newTagModifier.style.boxSizing = 'border-box';
+            
+            const newModifierText = document.createElement('span');
+            newModifierText.className = 'modifier-text';
+            newModifierText.textContent = modifierValue;
+            newTagModifier.appendChild(newModifierText);
+            
+            newTagContainer.appendChild(newTagModifier);
+        }
+        
+        // Replace the old tag container with the new one
+        while (tagPreview.firstChild) {
+            tagPreview.removeChild(tagPreview.firstChild);
+        }
+        tagPreview.appendChild(newTagContainer);
+        
+        // Update our references to the new elements
+        tagContainer = newTagContainer;
+        tagMain = newTagContainer.querySelector('.tag-main');
+        tagText = newTagContainer.querySelector('.tag-text');
+        tagModifier = newTagContainer.querySelector('.tag-modifier');
+        modifierText = newTagContainer.querySelector('.modifier-text');
+        
+        console.log('Preview recreated with:', newTagText.textContent);
+    }
+    
+    function getBorderWidth() {
+        switch(tagSizeSelect.value) {
+            case 'small': return 6;  
+            case 'large': return 12; 
+            default: return 8;       
+        }
+    }
+    
+    function showMessage(message, type) {
+        downloadMessage.textContent = message;
+        downloadMessage.className = 'download-message';
+        if (type) {
+            downloadMessage.classList.add(type);
+        }
+        
+        // Clear message after 5 seconds
+        setTimeout(function() {
+            downloadMessage.textContent = '';
+            downloadMessage.className = 'download-message';
+        }, 5000);
+    }
+    
     function generateSyllabusLanguage() {
         const tagType = tagTypeSelect.value;
         const useModifier = useModifierCheckbox.checked;
@@ -194,84 +343,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Set the syllabus text
         syllabusText.innerHTML = syllabusString;
-    }
-    downloadPNGButton.addEventListener('click', function() {
-        downloadAsPNG();
-    });
-    
-    downloadSVGButton.addEventListener('click', function() {
-        downloadAsSVG();
-    });
-    
-    // Functions
-    function updateTagText(value) {
-        tagText.textContent = 'AIUL-' + value;
-    }
-    
-    function updateModifierText(value) {
-        modifierText.textContent = value;
-    }
-    
-    function updateTagSize(size) {
-        // Remove all size classes
-        tagContainer.classList.remove('tag-size-small', 'tag-size-medium', 'tag-size-large');
-        
-        // Add the selected size class
-        tagContainer.classList.add('tag-size-' + size);
-    }
-    
-    function updatePreview() {
-        // Update tag text
-        updateTagText(tagTypeSelect.value);
-        
-        // Update modifier visibility
-        tagModifier.style.display = useModifierCheckbox.checked ? 'flex' : 'none';
-        
-        // Update modifier text if visible
-        if (useModifierCheckbox.checked) {
-            updateModifierText(modifierTypeSelect.value);
-        }
-        
-        // Update tag size
-        updateTagSize(tagSizeSelect.value);
-        
-        // Ensure all styling is applied correctly - apply border to both parts
-        tagMain.style.backgroundColor = 'white';
-        tagMain.style.border = getBorderWidth() + 'px solid black';
-        tagMain.style.boxSizing = 'border-box';
-        
-        tagModifier.style.backgroundColor = 'black';
-        tagModifier.style.color = 'white';
-        tagModifier.style.border = getBorderWidth() + 'px solid black';
-        tagModifier.style.boxSizing = 'border-box';
-        
-        // Force a repaint to ensure everything is updated
-        tagContainer.style.opacity = '0.99';
-        setTimeout(function() {
-            tagContainer.style.opacity = '1';
-        }, 50);
-    }
-    
-    function getBorderWidth() {
-        switch(tagSizeSelect.value) {
-            case 'small': return 6;  
-            case 'large': return 12; 
-            default: return 8;       
-        }
-    }
-    
-    function showMessage(message, type) {
-        downloadMessage.textContent = message;
-        downloadMessage.className = 'download-message';
-        if (type) {
-            downloadMessage.classList.add(type);
-        }
-        
-        // Clear message after 5 seconds
-        setTimeout(function() {
-            downloadMessage.textContent = '';
-            downloadMessage.className = 'download-message';
-        }, 5000);
     }
     
     function createSVG(forPNG = false) {
