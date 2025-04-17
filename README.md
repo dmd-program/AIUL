@@ -79,7 +79,3 @@ title: New Page
 ### Changing Styles
 
 Modify the styles in `_sass/main.scss` to customize the appearance of the site.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
