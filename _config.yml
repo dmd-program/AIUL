@@ -35,6 +35,8 @@ collections:
   licenses:
     output: true
     sort_by: order
+    permalink: /licenses/:name:output_ext
   modifiers:
     output: true
     sort_by: order
+    permalink: /modifiers/:name:output_ext
