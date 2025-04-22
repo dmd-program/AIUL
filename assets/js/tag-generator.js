@@ -423,6 +423,7 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
         
         // Define font sizes and border widths based on tag size
         let fontSize = 32;
+        let fontSizeModifier = 24;
         let borderWidth = 8;  
         let padding = 12;
         
@@ -465,7 +466,7 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
                 .modifier-text { 
                     font-family: 'Kanit', sans-serif;
                     font-weight: 300;
-                    font-size: ${fontSize}px;
+                    font-size: ${fontSizeModifier}px;
                     fill: white;
                 }
             </style>
@@ -506,9 +507,10 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
                     width="${modifierWidth - borderWidth}" height="${tagHeight - borderWidth}" 
                     fill="black" stroke="black" stroke-width="${borderWidth}" />`;
             
-            // Modifier text - also in a group with alignment
+            // Modifier text - moved to the left by half the main tag stroke width
+            // Adjust the x position by subtracting half the main border width
             svg += `<g>
-                <text x="${modifierX + (modifierWidth / 2)}" y="${tagHeight / 2 + fontSize/3}" 
+                <text x="${modifierX + (modifierWidth / 2) - halfStroke}" y="${tagHeight / 2 + fontSizeModifier/3}" 
                     class="modifier-text" text-anchor="middle">${modifierText}</text>
             </g>`;
         }
