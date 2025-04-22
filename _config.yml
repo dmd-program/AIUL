@@ -12,15 +12,28 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+# Added hooks to run Node.js script for generating license images
+hooks:
+  pre_build:
+    - scripts/generate-license-images.js
+
 # Exclude from processing
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
+  - scripts/node_modules
+  - scripts/temp.svg
   - vendor/bundle/
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - README.md
+
+# Files to ignore when watching for changes (prevents infinite regeneration loop)
+# But still allow them to be copied to the destination
+watch_exclude:
+  - assets/images/licenses
 
 # Navigation
 navigation:
