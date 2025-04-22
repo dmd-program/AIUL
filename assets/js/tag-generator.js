@@ -34,8 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get embed code elements
     const embedCodeSection = document.getElementById('embedCodeSection');
-    const linkEmbedButton = document.getElementById('linkEmbed');
-    const inlineEmbedButton = document.getElementById('inlineEmbed');
     const embedCodeDisplay = document.getElementById('embedCode');
     const copyEmbedCodeButton = document.getElementById('copyEmbedCode');
     const embedPreview = document.getElementById('embedPreview');
@@ -120,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         syllabusLanguage.style.display = 'block';
         
         // Generate embed code
-        generateEmbedCode('linked');
+        generateEmbedCode();
         
         // Show the embed code section
         embedCodeSection.style.display = 'block';
@@ -129,19 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             syllabusLanguage.scrollIntoView({ behavior: 'smooth' });
         }, 100);
-    });
-
-    // Toggle between embed code types
-    linkEmbedButton.addEventListener('click', function() {
-        linkEmbedButton.classList.add('active');
-        inlineEmbedButton.classList.remove('active');
-        generateEmbedCode('linked');
-    });
-
-    inlineEmbedButton.addEventListener('click', function() {
-        inlineEmbedButton.classList.add('active');
-        linkEmbedButton.classList.remove('active');
-        generateEmbedCode('inline');
     });
 
     // Copy embed code functionality
@@ -366,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         syllabusText.innerHTML = syllabusString;
     }
 
-    function generateEmbedCode(type = 'linked') {
+    function generateEmbedCode() {
         const tagType = tagTypeSelect.value;
         const useModifier = useModifierCheckbox.checked;
         const modifierType = useModifier ? modifierTypeSelect.value : '';
@@ -393,48 +378,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const licenseUrl = `${origin}${basePath}/licenses/${tagType.toLowerCase()}.html`;
         const licenseImageUrl = `${origin}${basePath}/assets/images/licenses/${tagCode.toLowerCase()}.png`;
         
-        let embedCode = '';
-        
-        if (type === 'linked') {
-            // Generate code using a link to a hosted image on the website
-            embedCode = `<a href="${licenseUrl}" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
+        // Generate code using a link to a hosted image on the website
+        const embedCode = `<a href="${licenseUrl}" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
   <img alt="${tagCode} - ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" src="${licenseImageUrl}" style="border-width:0; max-width:170px;" />
 </a>
 <br />
-This work is licensed under a <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a>.`;
-        } else {
-            // Generate self-contained HTML/CSS code
-            embedCode = `<style>
-.aiul-tag {
-  display: inline-flex;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  text-decoration: none;
-}
-.aiul-main {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-}
-.aiul-modifier {
-  background-color: black;
-  color: white;
-  border: 2px solid black;
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-}
-</style>
-<a href="${licenseUrl}" class="aiul-tag" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
-  <span class="aiul-main">${tagCode.split('-')[0]}-${tagCode.split('-')[1]}</span>
-  ${useModifier ? `<span class="aiul-modifier">${modifierType}</span>` : ''}
-</a>
-<br />
-This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a>.`;
-        }
+Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a> for AI usage information.`;
         
         // Update the embed code display
         embedCodeDisplay.textContent = embedCode;
