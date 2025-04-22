@@ -154,7 +154,7 @@ async function generatePNGFromSVG(svgContent, outputPath) {
         const originalHeight = parseFloat(heightMatch[1]);
         
         // Scale factor for the SVG itself - make it much larger
-        const svgScale = 4;
+        const svgScale = 1;
         const newWidth = originalWidth * svgScale;
         const newHeight = originalHeight * svgScale;
         
