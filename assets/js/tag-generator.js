@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load Kanit font and ensure it's loaded before generating images
     const fontLink = document.createElement('link');
-    fontLink.href = 'https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&display=swap';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap';
     fontLink.rel = 'stylesheet';
     document.head.appendChild(fontLink);
     
@@ -457,7 +457,7 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
         // Add embedded font and exact styling for better rendering
         svg += `<defs>
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&amp;display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&amp;display=swap');
                 .tag-text { 
                     font-family: 'Kanit', sans-serif;
                     font-weight: 700;
@@ -465,7 +465,7 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
                 }
                 .modifier-text { 
                     font-family: 'Kanit', sans-serif;
-                    font-weight: 300;
+                    font-weight: 400;
                     font-size: ${fontSizeModifier}px;
                     fill: white;
                 }

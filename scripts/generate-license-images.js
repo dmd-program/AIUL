@@ -55,6 +55,7 @@ if (!fs.existsSync(outputDir)) {
 function createSVG(licenseCode, modifierCode = null, forPNG = false) {
   // Define font sizes and border widths based on medium tag size
   const fontSize = 32;
+  const fontSizeModifier = 24;
   const borderWidth = 8;
   const padding = 12;
   
@@ -87,7 +88,7 @@ function createSVG(licenseCode, modifierCode = null, forPNG = false) {
   // Add embedded font and exact styling for better rendering
   svg += `<defs>
       <style>
-          @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&amp;display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&amp;display=swap');
           .tag-text { 
               font-family: 'Kanit', sans-serif;
               font-weight: 700;
@@ -95,8 +96,8 @@ function createSVG(licenseCode, modifierCode = null, forPNG = false) {
           }
           .modifier-text { 
               font-family: 'Kanit', sans-serif;
-              font-weight: 300;
-              font-size: ${fontSize}px;
+              font-weight: 400;
+              font-size: ${fontSizeModifier}px;
               fill: white;
           }
       </style>
@@ -105,7 +106,9 @@ function createSVG(licenseCode, modifierCode = null, forPNG = false) {
   // For direct SVG download (not for PNG conversion), use regular border width
   // For PNG conversion, use thicker border if specified
   const actualBorderWidth = forPNG ? borderWidth * 2 : borderWidth;
-// const actualBorderWidth = borderWidth;  
+  // Store half the stroke width for positioning the modifier text
+  const halfStroke = actualBorderWidth / 2;
+  
   // Main tag rectangle
   svg += `<rect x="0" y="0" width="${tagWidth}" height="${tagHeight}" 
           fill="white" stroke="black" stroke-width="${actualBorderWidth}" />`;
@@ -126,8 +129,9 @@ function createSVG(licenseCode, modifierCode = null, forPNG = false) {
             fill="black" stroke="black" stroke-width="${actualBorderWidth}" />`;
     
     // Modifier text - also in a group with alignment
+    // Modified to move text left by half the main tag stroke width
     svg += `<g>
-        <text x="${modifierX + (modifierWidth / 2)}" y="${tagHeight / 2 + fontSize/3}" 
+        <text x="${modifierX + (modifierWidth / 2) - (borderWidth / 2)}" y="${tagHeight / 2 + fontSizeModifier/3}" 
             class="modifier-text" text-anchor="middle">${modifierText}</text>
     </g>`;
   }
