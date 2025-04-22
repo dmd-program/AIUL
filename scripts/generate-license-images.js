@@ -105,7 +105,7 @@ function createSVG(licenseCode, modifierCode = null, forPNG = false) {
   // For direct SVG download (not for PNG conversion), use regular border width
   // For PNG conversion, use thicker border if specified
   const actualBorderWidth = forPNG ? borderWidth * 2 : borderWidth;
-  
+// const actualBorderWidth = borderWidth;  
   // Main tag rectangle
   svg += `<rect x="0" y="0" width="${tagWidth}" height="${tagHeight}" 
           fill="white" stroke="black" stroke-width="${actualBorderWidth}" />`;
