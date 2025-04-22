@@ -35,6 +35,26 @@ This repository contains the Jekyll-based website for the AI Usage License (AIUL
 
 5. Browse to http://localhost:4000
 
+
+### Generate static license graphics
+
+1. Go into scripts directory:
+   ```
+   cd /scripts
+   ```
+
+2. Install node packages:
+   ```
+   npm install
+   ```
+
+3. Generate the static graphics
+   ```
+   npx run generate
+   
+   # This generates .PNG images in the /assets/images/licenses folder
+   ```
+
 ## Site Structure
 
 - `_config.yml` - Site configuration
