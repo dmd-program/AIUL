@@ -137,41 +137,80 @@ function createSVG(licenseCode, modifierCode = null, forPNG = false) {
 }
 
 async function generatePNGFromSVG(svgContent, outputPath) {
-  try {
-    // Create a Blob URL from SVG content
-    const svgBuffer = Buffer.from(svgContent);
-    
-    // Write SVG to a temporary file to load with canvas
-    const tempSvgPath = path.join(__dirname, 'temp.svg');
-    fs.writeFileSync(tempSvgPath, svgBuffer);
-    
-    // Load SVG and draw to canvas
-    const scale = 4; // Scale factor for higher resolution
-    const img = await loadImage(tempSvgPath);
-    
-    // Create a canvas with the scaled dimensions
-    const canvas = createCanvas(img.width * scale, img.height * scale);
-    const ctx = canvas.getContext('2d');
-    
-    // Fill with white background
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw the scaled image
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    
-    // Write canvas to PNG file
-    const buffer = canvas.toBuffer('image/png');
-    fs.writeFileSync(outputPath, buffer);
-    
-    // Clean up temporary file
-    fs.unlinkSync(tempSvgPath);
-    
-    console.log(`Generated: ${outputPath}`);
-  } catch (error) {
-    console.error('Error generating PNG:', error);
+    try {
+      // Instead of using the default SVG size, let's create a much larger SVG first
+      // by modifying the SVG content to have larger dimensions
+  
+      // Parse the SVG to modify its dimensions
+      let biggerSvgContent = svgContent;
+      
+      // Extract current dimensions
+      const widthMatch = svgContent.match(/width="([^"]+)"/);
+      const heightMatch = svgContent.match(/height="([^"]+)"/);
+      const viewBoxMatch = svgContent.match(/viewBox="([^"]+)"/);
+      
+      if (widthMatch && heightMatch) {
+        const originalWidth = parseFloat(widthMatch[1]);
+        const originalHeight = parseFloat(heightMatch[1]);
+        
+        // Scale factor for the SVG itself - make it much larger
+        const svgScale = 4;
+        const newWidth = originalWidth * svgScale;
+        const newHeight = originalHeight * svgScale;
+        
+        // Replace dimensions in SVG
+        biggerSvgContent = svgContent
+          .replace(/width="([^"]+)"/, `width="${newWidth}"`)
+          .replace(/height="([^"]+)"/, `height="${newHeight}"`);
+        
+        // Keep the viewBox the same to maintain proportions
+        if (!viewBoxMatch) {
+          // If no viewBox exists, add one to maintain scaling
+          biggerSvgContent = biggerSvgContent.replace('<svg ', 
+            `<svg viewBox="0 0 ${originalWidth} ${originalHeight}" `);
+        }
+      }
+      
+      // Write the larger SVG to a temporary file
+      const tempSvgPath = path.join(__dirname, 'temp.svg');
+      fs.writeFileSync(tempSvgPath, biggerSvgContent);
+      
+      // Load the larger SVG
+      const img = await loadImage(tempSvgPath);
+      
+      // Additional scale factor for PNG conversion
+      const pngScale = 1;
+      
+      // Create an even larger canvas
+      const canvas = createCanvas(img.width * pngScale, img.height * pngScale);
+      const ctx = canvas.getContext('2d');
+      
+      // Enable high-quality image rendering
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      
+      // Fill with white background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw the scaled image
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      
+      // Write canvas to PNG file with high quality
+      const buffer = canvas.toBuffer('image/png', {
+        compressionLevel: 0,  // No compression for better quality
+        filters: canvas.PNG_ALL_FILTERS
+      });
+      fs.writeFileSync(outputPath, buffer);
+      
+      // Clean up temporary file
+      fs.unlinkSync(tempSvgPath);
+      
+      console.log(`Generated: ${outputPath}`);
+    } catch (error) {
+      console.error('Error generating PNG:', error);
+    }
   }
-}
 
 // Main function to generate all license images
 async function generateAllLicenseImages() {
