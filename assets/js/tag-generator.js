@@ -32,6 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const syllabusText = document.getElementById('syllabusText');
     const copySyllabus = document.getElementById('copySyllabus');
 
+    // Get embed code elements
+    const embedCodeSection = document.getElementById('embedCodeSection');
+    const linkEmbedButton = document.getElementById('linkEmbed');
+    const inlineEmbedButton = document.getElementById('inlineEmbed');
+    const embedCodeDisplay = document.getElementById('embedCode');
+    const copyEmbedCodeButton = document.getElementById('copyEmbedCode');
+    const embedPreview = document.getElementById('embedPreview');
+
     // Debug log to check initial values
     console.log('Initial tag type value:', tagTypeSelect.value);
     console.log('Initial select options:', Array.from(tagTypeSelect.options).map(o => o.value));
@@ -120,10 +128,45 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show the syllabus language section
         syllabusLanguage.style.display = 'block';
         
+        // Generate embed code
+        generateEmbedCode('linked');
+        
+        // Show the embed code section
+        embedCodeSection.style.display = 'block';
+        
         // Scroll to the syllabus language section
         setTimeout(function() {
             syllabusLanguage.scrollIntoView({ behavior: 'smooth' });
         }, 100);
+    });
+
+    // Toggle between embed code types
+    linkEmbedButton.addEventListener('click', function() {
+        linkEmbedButton.classList.add('active');
+        inlineEmbedButton.classList.remove('active');
+        generateEmbedCode('linked');
+    });
+
+    inlineEmbedButton.addEventListener('click', function() {
+        inlineEmbedButton.classList.add('active');
+        linkEmbedButton.classList.remove('active');
+        generateEmbedCode('inline');
+    });
+
+    // Copy embed code functionality
+    copyEmbedCodeButton.addEventListener('click', function() {
+        navigator.clipboard.writeText(embedCodeDisplay.textContent)
+            .then(() => {
+                showMessage('Embed code copied to clipboard!', 'success');
+                this.textContent = 'Copied!';
+                setTimeout(() => {
+                    this.textContent = 'Copy Code';
+                }, 2000);
+            })
+            .catch(err => {
+                console.error('Could not copy text: ', err);
+                showMessage('Failed to copy to clipboard. Please try again.', 'error');
+            });
     });
     
     // Copy to clipboard functionality
@@ -344,6 +387,108 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set the syllabus text
         syllabusText.innerHTML = syllabusString;
     }
+
+    function generateEmbedCode(type = 'linked') {
+        const tagType = tagTypeSelect.value;
+        const useModifier = useModifierCheckbox.checked;
+        const modifierType = useModifier ? modifierTypeSelect.value : '';
+        const tagFullName = getTagFullName(tagType);
+        const modifierFullName = useModifier ? getModifierFullName(modifierType) : '';
+        const tagCode = `AIUL-${tagType}${useModifier ? '-' + modifierType : ''}`;
+        
+        // Dynamically determine the base URL from the current page location
+        const currentUrl = window.location.href;
+        const urlParts = currentUrl.split('/');
+        
+        // Get the origin (protocol + hostname + port)
+        const origin = window.location.origin;
+        
+        // Find the base path by looking for common patterns
+        let basePath = '';
+        const aiulIndex = urlParts.findIndex(part => part === 'aiul' || part.includes('aiul'));
+        if (aiulIndex !== -1) {
+            // If we found 'aiul' in the path, take everything up to and including it
+            basePath = urlParts.slice(0, aiulIndex + 1).join('/').replace(origin, '');
+        }
+        
+        // Construct full URLs for license and image
+        const licenseUrl = `${origin}${basePath}/licenses/${tagType.toLowerCase()}.html`;
+        const licenseImageUrl = `${origin}${basePath}/assets/images/licenses/${tagCode.toLowerCase()}.png`;
+        
+        let embedCode = '';
+        
+        if (type === 'linked') {
+            // Generate code using a link to a hosted image on the website
+            embedCode = `<a href="${licenseUrl}" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
+  <img alt="${tagCode} - ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" src="${licenseImageUrl}" style="border-width:0; max-width:170px;" />
+</a>
+<br />
+This work is licensed under a <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a>.`;
+        } else {
+            // Generate self-contained HTML/CSS code
+            embedCode = `<style>
+.aiul-tag {
+  display: inline-flex;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+}
+.aiul-main {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+.aiul-modifier {
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+</style>
+<a href="${licenseUrl}" class="aiul-tag" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
+  <span class="aiul-main">${tagCode.split('-')[0]}-${tagCode.split('-')[1]}</span>
+  ${useModifier ? `<span class="aiul-modifier">${modifierType}</span>` : ''}
+</a>
+<br />
+This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a>.`;
+        }
+        
+        // Update the embed code display
+        embedCodeDisplay.textContent = embedCode;
+        
+        // Update the preview
+        embedPreview.innerHTML = embedCode;
+    }
+    
+    function getTagFullName(tagType) {
+        switch(tagType) {
+            case 'NA': return 'Not Allowed';
+            case 'WA': return 'With Approval';
+            case 'CD': return 'Conceptual Development';
+            case 'TC': return 'Transformative Collaboration';
+            case 'DP': return 'Directed Production';
+            case 'IU': return 'Integrated Usage';
+            default: return 'Unknown';
+        }
+    }
+    
+    function getModifierFullName(modifierType) {
+        switch(modifierType) {
+            case 'WR': return 'Writing';
+            case 'IM': return 'Image';
+            case 'VD': return 'Video';
+            case 'AU': return 'Audio';
+            case '3D': return '3D Design';
+            case 'TR': return 'Traditional Media';
+            case 'MX': return 'Mixed Media';
+            default: return 'Unknown';
+        }
+    }
     
     function createSVG(forPNG = false) {
         // This is a simplified but more accurate approach
@@ -354,17 +499,17 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(tagSize) {
             case 'small':
                 fontSize = 24;
-                borderWidth = 6;  // Updated to match SCSS
+                borderWidth = 6;  
                 padding = 8;
                 break;
             case 'large':
                 fontSize = 48;
-                borderWidth = 12; // Updated to match SCSS
+                borderWidth = 12; 
                 padding = 16;
                 break;
             default: // medium
                 fontSize = 32;
-                borderWidth = 8;  // Updated to match SCSS
+                borderWidth = 8;       
                 padding = 12;
         }
         

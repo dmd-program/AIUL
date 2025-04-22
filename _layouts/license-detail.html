@@ -1,0 +1,198 @@
+---
+layout: default
+---
+
+<div class="page-content license-detail">
+  <div class="license-header">
+    <div class="license-tag">
+      <div class="tag-container tag-size-medium">
+        <div class="tag-main">
+          <span class="tag-text">{{ page.title }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="license-info">
+      <h1>{{ page.title }}: {{ page.full_name }}</h1>
+      <p class="license-description">{{ page.description }}</p>
+    </div>
+  </div>
+  
+  <div class="license-content">
+    {{ content }}
+  </div>
+  
+  <div class="license-usage">
+    <h2>When to Use This License</h2>
+    <ul>
+      {% for item in page.when_to_use %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+  {% if page.requirements %}
+  <div class="license-requirements">
+    <h2>Requirements</h2>
+    <ul>
+      {% for requirement in page.requirements %}
+        <li>{{ requirement }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  
+  <div class="license-examples">
+    <h2>Implementation Examples</h2>
+    <p>{{ page.example }}</p>
+  </div>
+  
+  <div class="license-modifiers">
+    <h2>Media Modifiers</h2>
+    <p>This license can be combined with the following media modifiers to specify which types of AI tools may be used:</p>
+    
+    <div class="modifier-grid">
+      {% for modifier in site.modifiers %}
+        {% assign modifier_license_path = page.title | downcase | remove: "aiul-" | append: "-" | append: modifier.title | downcase %}
+        {% assign modifier_image_path = "/assets/images/licenses/aiul-" | append: modifier_license_path | append: ".png" | relative_url %}
+        <div class="modifier-item">
+          <div class="modifier-image">
+            <img src="{{ modifier_image_path }}" alt="{{ page.title }}-{{ modifier.title }}" />
+          </div>
+          <div class="modifier-info">
+            <h3>{{ modifier.title }} ({{ modifier.full_name }})</h3>
+            <p>{{ modifier.description }}</p>
+            <a href="{{ modifier.url | relative_url }}">Learn more</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+  <div class="embed-section">
+    <h2>Embed This License</h2>
+    <p>Copy and paste the code below to embed this license on your website:</p>
+    
+    <div class="embed-tabs">
+      <button class="embed-tab active" data-type="linked">Linked Image</button>
+      <button class="embed-tab" data-type="inline">Self-contained</button>
+    </div>
+    
+    <div class="embed-code-container">
+      <pre class="embed-code linked-code">
+&lt;a href="{{ site.url }}{{ site.baseurl }}/licenses/{{ page.title | remove: 'AIUL-' | downcase }}.html" title="{{ page.title }} License: {{ page.full_name }}" target="_blank" rel="license"&gt;
+  &lt;img alt="{{ page.title }} - {{ page.full_name }}" src="{{ site.url }}{{ site.baseurl }}/assets/images/licenses/aiul-{{ page.title | remove: 'AIUL-' | downcase }}.png" style="border-width:0; max-width:170px;" /&gt;
+&lt;/a&gt;
+&lt;br /&gt;
+This work is licensed under a &lt;a href="{{ site.url }}{{ site.baseurl }}/licenses/{{ page.title | remove: 'AIUL-' | downcase }}.html" target="_blank" rel="license"&gt;AI Usage License {{ page.title }}&lt;/a&gt;.
+</pre>
+      <pre class="embed-code inline-code" style="display:none;">
+&lt;style&gt;
+.aiul-tag {
+  display: inline-flex;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+}
+.aiul-main {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+&lt;/style&gt;
+&lt;a href="{{ site.url }}{{ site.baseurl }}/licenses/{{ page.title | remove: 'AIUL-' | downcase }}.html" class="aiul-tag" title="{{ page.title }} License: {{ page.full_name }}" target="_blank" rel="license"&gt;
+  &lt;span class="aiul-main"&gt;{{ page.title }}&lt;/span&gt;
+&lt;/a&gt;
+&lt;br /&gt;
+This work is licensed under an &lt;a href="{{ site.url }}{{ site.baseurl }}/licenses/{{ page.title | remove: 'AIUL-' | downcase }}.html" target="_blank" rel="license"&gt;AI Usage License {{ page.title }}&lt;/a&gt;.
+</pre>
+      <button class="copy-button">Copy Code</button>
+    </div>
+  </div>
+  
+  <div class="license-syllabus">
+    <h2>Sample Syllabus Language</h2>
+    <div class="syllabus-example">
+      <p><strong>{{ page.title }}:</strong> This assignment is tagged {{ page.title }} ({{ page.full_name }}), which means {{ page.syllabus_text }}</p>
+      
+      {% if page.title != 'AIUL-NA' and page.title != 'AIUL-WA' %}
+      <p><strong>Documentation Requirement:</strong> For this assignment, you must include documentation of your AI usage process including:</p>
+      <ul>
+        <li>Which AI tools you used</li>
+        <li>How you used them in your process</li>
+        <li>What prompts or inputs you provided</li>
+        <li>How you modified or integrated AI outputs</li>
+        <li>Your reflections on the human-AI collaboration process</li>
+      </ul>
+      {% endif %}
+    </div>
+    <button class="copy-button syllabus-copy">Copy Syllabus Language</button>
+  </div>
+  
+  <div class="license-navigation">
+    <h2>Other Licenses</h2>
+    <div class="license-grid">
+      {% for license in site.licenses %}
+        {% if license.title != page.title %}
+          <a href="{{ license.url | relative_url }}" class="license-link">
+            <div class="license-icon">{{ license.title }}</div>
+            <div class="license-name">{{ license.full_name }}</div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Tab switching for embed code
+  const embedTabs = document.querySelectorAll('.embed-tab');
+  const linkedCode = document.querySelector('.linked-code');
+  const inlineCode = document.querySelector('.inline-code');
+  
+  embedTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      embedTabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      if (this.dataset.type === 'linked') {
+        linkedCode.style.display = 'block';
+        inlineCode.style.display = 'none';
+      } else {
+        linkedCode.style.display = 'none';
+        inlineCode.style.display = 'block';
+      }
+    });
+  });
+  
+  // Copy functionality
+  const copyButtons = document.querySelectorAll('.copy-button');
+  copyButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      let textToCopy;
+      
+      if (this.classList.contains('syllabus-copy')) {
+        textToCopy = document.querySelector('.syllabus-example').innerText;
+      } else {
+        textToCopy = document.querySelector('.embed-code:not([style*="display: none"])').innerText;
+      }
+      
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          const originalText = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => {
+            this.textContent = originalText;
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+    });
+  });
+});
+</script>

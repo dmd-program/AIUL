@@ -172,6 +172,93 @@
     border-top: 1px solid $psu-light-blue;
   }
   
+  /* Embed code section styles */
+  .embed-options {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .embed-option {
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &.active {
+      background-color: #0f4c81;
+      color: white;
+      border-color: #0f4c81;
+    }
+    
+    &:hover:not(.active) {
+      background-color: #e0e0e0;
+    }
+  }
+  
+  .embed-code-container {
+    position: relative;
+  }
+  
+  #embedCode {
+    width: 100%;
+    min-height: 120px;
+    margin-bottom: 0.5rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  
+  .embed-preview {
+    margin-top: 2rem;
+    
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  #embedPreview {
+    padding: 1rem;
+    border: 1px dashed #ccc;
+    background-color: #fcfcfc;
+    
+    .aiul-tag {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  // Style for the custom license tag in the embed
+  #embedPreview .aiul-tag {
+    display: inline-flex;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  #embedPreview .aiul-main {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  #embedPreview .aiul-modifier {
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  // Syllabus section
+  #syllabusLanguage {
+    margin-bottom: 2rem;
+  }
+  
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .generator-container {
