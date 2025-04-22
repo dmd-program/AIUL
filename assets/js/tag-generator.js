@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load Kanit font and ensure it's loaded before generating images
     const fontLink = document.createElement('link');
-    fontLink.href = 'https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&display=swap';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap';
     fontLink.rel = 'stylesheet';
     document.head.appendChild(fontLink);
     
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const useModifierCheckbox = document.getElementById('useModifier');
     const modifierGroup = document.querySelector('.modifier-group');
     const modifierTypeSelect = document.getElementById('modifierType');
-    const tagSizeSelect = document.getElementById('tagSize');
+    // Size selector removed as we're standardizing on medium size
     const generateTagButton = document.getElementById('generateTag');
     const downloadPNGButton = document.getElementById('downloadPNG');
     const downloadSVGButton = document.getElementById('downloadSVG');
@@ -34,8 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get embed code elements
     const embedCodeSection = document.getElementById('embedCodeSection');
-    const linkEmbedButton = document.getElementById('linkEmbed');
-    const inlineEmbedButton = document.getElementById('inlineEmbed');
     const embedCodeDisplay = document.getElementById('embedCode');
     const copyEmbedCodeButton = document.getElementById('copyEmbedCode');
     const embedPreview = document.getElementById('embedPreview');
@@ -47,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize with default values
     updateTagText(tagTypeSelect.value);
     updateModifierText(modifierTypeSelect.value);
-    updateTagSize(tagSizeSelect.value);
+    // Always use medium size
+    tagContainer.classList.add('tag-size-medium');
     
     // Call updatePreview once on initial load to ensure proper styling
     updatePreview();
@@ -95,16 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     });
     
-    // Force update preview when size changes
-    tagSizeSelect.addEventListener('change', function() {
-        updateTagSize(this.value);
-        // Apply border width explicitly based on selected size
-        const borderWidth = getBorderWidth();
-        tagMain.style.borderWidth = borderWidth + 'px';
-        tagModifier.style.borderWidth = borderWidth + 'px';
-        updatePreview();
-    });
-    
     generateTagButton.addEventListener('click', function() {
         // Set current date/time for filename
         window.generatedAt = new Date().toISOString().replace(/[:.]/g, '-');
@@ -129,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         syllabusLanguage.style.display = 'block';
         
         // Generate embed code
-        generateEmbedCode('linked');
+        generateEmbedCode();
         
         // Show the embed code section
         embedCodeSection.style.display = 'block';
@@ -138,19 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             syllabusLanguage.scrollIntoView({ behavior: 'smooth' });
         }, 100);
-    });
-
-    // Toggle between embed code types
-    linkEmbedButton.addEventListener('click', function() {
-        linkEmbedButton.classList.add('active');
-        inlineEmbedButton.classList.remove('active');
-        generateEmbedCode('linked');
-    });
-
-    inlineEmbedButton.addEventListener('click', function() {
-        inlineEmbedButton.classList.add('active');
-        linkEmbedButton.classList.remove('active');
-        generateEmbedCode('inline');
     });
 
     // Copy embed code functionality
@@ -201,20 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
         modifierText.textContent = value;
     }
     
-    function updateTagSize(size) {
-        // Remove all size classes
-        tagContainer.classList.remove('tag-size-small', 'tag-size-medium', 'tag-size-large');
-        
-        // Add the selected size class
-        tagContainer.classList.add('tag-size-' + size);
-    }
-    
     function updatePreview() {
         // Get the current values
         const licenseCode = tagTypeSelect.value;
         const useModifier = useModifierCheckbox.checked;
         const modifierValue = modifierTypeSelect.value;
-        const tagSize = tagSizeSelect.value;
         
         console.log('Recreating preview with:', 'AIUL-' + licenseCode);
         
@@ -224,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create a completely new tag container
         const newTagContainer = document.createElement('div');
         newTagContainer.id = 'tagContainer';
-        newTagContainer.className = 'tag-size-' + tagSize;
+        newTagContainer.className = 'tag-size-medium';
         
         // Create the main tag element
         const newTagMain = document.createElement('div');
@@ -277,11 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function getBorderWidth() {
-        switch(tagSizeSelect.value) {
-            case 'small': return 6;  
-            case 'large': return 12; 
-            default: return 8;       
-        }
+        return 12; // Standardized border width for medium size
     }
     
     function showMessage(message, type) {
@@ -388,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         syllabusText.innerHTML = syllabusString;
     }
 
-    function generateEmbedCode(type = 'linked') {
+    function generateEmbedCode() {
         const tagType = tagTypeSelect.value;
         const useModifier = useModifierCheckbox.checked;
         const modifierType = useModifier ? modifierTypeSelect.value : '';
@@ -415,48 +378,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const licenseUrl = `${origin}${basePath}/licenses/${tagType.toLowerCase()}.html`;
         const licenseImageUrl = `${origin}${basePath}/assets/images/licenses/${tagCode.toLowerCase()}.png`;
         
-        let embedCode = '';
-        
-        if (type === 'linked') {
-            // Generate code using a link to a hosted image on the website
-            embedCode = `<a href="${licenseUrl}" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
+        // Generate code using a link to a hosted image on the website
+        const embedCode = `<a href="${licenseUrl}" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
   <img alt="${tagCode} - ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" src="${licenseImageUrl}" style="border-width:0; max-width:170px;" />
 </a>
 <br />
-This work is licensed under a <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a>.`;
-        } else {
-            // Generate self-contained HTML/CSS code
-            embedCode = `<style>
-.aiul-tag {
-  display: inline-flex;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  text-decoration: none;
-}
-.aiul-main {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-}
-.aiul-modifier {
-  background-color: black;
-  color: white;
-  border: 2px solid black;
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-}
-</style>
-<a href="${licenseUrl}" class="aiul-tag" title="AIUL ${tagCode} License: ${tagFullName}${useModifier ? ' for ' + modifierFullName : ''}" target="_blank" rel="license">
-  <span class="aiul-main">${tagCode.split('-')[0]}-${tagCode.split('-')[1]}</span>
-  ${useModifier ? `<span class="aiul-modifier">${modifierType}</span>` : ''}
-</a>
-<br />
-This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a>.`;
-        }
+Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage License ${tagCode}</a> for AI usage information.`;
         
         // Update the embed code display
         embedCodeDisplay.textContent = embedCode;
@@ -492,26 +419,13 @@ This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="lice
     
     function createSVG(forPNG = false) {
         // This is a simplified but more accurate approach
-        const tagSize = tagSizeSelect.value;
+        const tagSize = 'medium'; // Always use medium size
         
         // Define font sizes and border widths based on tag size
-        let fontSize, borderWidth, padding;
-        switch(tagSize) {
-            case 'small':
-                fontSize = 24;
-                borderWidth = 6;  
-                padding = 8;
-                break;
-            case 'large':
-                fontSize = 48;
-                borderWidth = 12; 
-                padding = 16;
-                break;
-            default: // medium
-                fontSize = 32;
-                borderWidth = 8;       
-                padding = 12;
-        }
+        let fontSize = 32;
+        let fontSizeModifier = 24;
+        let borderWidth = 8;  
+        let padding = 12;
         
         // Get text content
         const mainText = tagText.textContent;
@@ -543,7 +457,7 @@ This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="lice
         // Add embedded font and exact styling for better rendering
         svg += `<defs>
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&amp;display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&amp;display=swap');
                 .tag-text { 
                     font-family: 'Kanit', sans-serif;
                     font-weight: 700;
@@ -551,20 +465,27 @@ This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="lice
                 }
                 .modifier-text { 
                     font-family: 'Kanit', sans-serif;
-                    font-weight: 300;
-                    font-size: ${fontSize}px;
+                    font-weight: 400;
+                    font-size: ${fontSizeModifier}px;
                     fill: white;
                 }
             </style>
         </defs>`;
         
-        // For direct SVG download (not for PNG conversion), use regular border width
-        // For PNG conversion, use thicker border if specified
-        const actualBorderWidth = forPNG ? borderWidth * 2 : borderWidth;
+        // To make strokes inward-facing:
+        // 1. Create outer rectangle with no stroke that defines the full boundary
+        // 2. Create inner rectangle with stroke that's inset by half the stroke width
         
-        // Main tag rectangle
+        // Main tag white background (outer boundary, no stroke)
         svg += `<rect x="0" y="0" width="${tagWidth}" height="${tagHeight}" 
-                fill="white" stroke="black" stroke-width="${actualBorderWidth}" />`;
+                fill="white" />`;
+        
+        // Main tag inner rectangle with inward stroke
+        // Inset by half the stroke width on all sides
+        const halfStroke = borderWidth / 2;
+        svg += `<rect x="${halfStroke}" y="${halfStroke}" 
+                width="${tagWidth - borderWidth}" height="${tagHeight - borderWidth}" 
+                fill="white" stroke="black" stroke-width="${borderWidth}" />`;
         
         // For Illustrator compatibility, we'll add the text inside a group with alignment
         svg += `<g>
@@ -577,13 +498,19 @@ This work is licensed under an <a href="${licenseUrl}" target="_blank" rel="lice
         if (useModifierCheckbox.checked) {
             const modifierX = tagWidth;
             
-            // Modifier rectangle - now with stroke matching the main box
+            // Modifier rectangle outer boundary (no stroke)
             svg += `<rect x="${modifierX}" y="0" width="${modifierWidth}" height="${tagHeight}" 
-                    fill="black" stroke="black" stroke-width="${actualBorderWidth}" />`;
+                    fill="black" />`;
             
-            // Modifier text - also in a group with alignment
+            // Modifier rectangle inner boundary with inward stroke
+            svg += `<rect x="${modifierX + halfStroke}" y="${halfStroke}" 
+                    width="${modifierWidth - borderWidth}" height="${tagHeight - borderWidth}" 
+                    fill="black" stroke="black" stroke-width="${borderWidth}" />`;
+            
+            // Modifier text - moved to the left by half the main tag stroke width
+            // Adjust the x position by subtracting half the main border width
             svg += `<g>
-                <text x="${modifierX + (modifierWidth / 2)}" y="${tagHeight / 2 + fontSize/3}" 
+                <text x="${modifierX + (modifierWidth / 2) - halfStroke}" y="${tagHeight / 2 + fontSizeModifier/3}" 
                     class="modifier-text" text-anchor="middle">${modifierText}</text>
             </g>`;
         }

@@ -1,40 +1,25 @@
-# Site settings
-title: AIUL - AI Usage License Project
-email:
-description: >-
-  Standardizing AI usage in digital arts, empowering educators and students with clear AI usage guidelines.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+# Development-specific settings that override _config.yml
+# Use empty baseurl for local development
+baseurl: ""
 
-# Build settings
-markdown: kramdown
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
+# Disable license image generation during development to prevent infinite loops
+hooks:
+  pre_build: []  # Disable hooks during development
 
-# Exclude from processing
+# Exclude from processing - same as main config plus scripts folder
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
+  - scripts/node_modules
+  - scripts/temp.svg
   - vendor/bundle/
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - README.md
 
-# Navigation
-navigation:
-  - {name: Home, link: '/'}
-  - {name: Licenses, link: '/licenses.html'}
-  - {name: Guide, link: '/guide.html'}
-  - {name: Tag Generator, link: '/tag-generator.html'}
-  - {name: Resources, link: '/resources.html'}
-
-# Collections
-collections:
-  licenses:
-    output: true
-    sort_by: order
-  modifiers:
-    output: true
-    sort_by: order
+# Files to ignore when watching for changes (prevents infinite regeneration loop)
+# But still allow them to be copied to the destination
+watch_exclude:
+  - assets/images/licenses

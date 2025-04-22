@@ -1,0 +1,103 @@
+require 'fileutils'
+require 'mini_magick'
+
+module Jekyll
+  class LicenseImageGenerator < Generator
+    safe true
+    priority :low
+
+    def generate(site)
+      # Get licenses and modifiers from collections
+      licenses = site.collections['licenses'].docs
+      modifiers = site.collections['modifiers'].docs
+      
+      # Create output directory if it doesn't exist
+      output_dir = File.join(site.source, 'assets', 'images', 'licenses')
+      FileUtils.mkdir_p(output_dir) unless Dir.exist?(output_dir)
+      
+      # Generate base license images
+      licenses.each do |license|
+        license_code = license.data['title'].sub('AIUL-', '')
+        generate_license_image(license_code, nil, output_dir)
+        
+        # Generate license + modifier combinations
+        modifiers.each do |modifier|
+          modifier_code = modifier.data['title']
+          generate_license_image(license_code, modifier_code, output_dir)
+        end
+      end
+    end
+    
+    def generate_license_image(license_code, modifier_code, output_dir)
+      # Set up image parameters to match the site design
+      font_size = 28
+      border_width = 6
+      padding_x = 20
+      padding_y = 16
+      
+      # Calculate tag width based on text length (approximate)
+      main_text = "AIUL-#{license_code}"
+      char_width = font_size * 0.65  # Approximate character width
+      main_width = (main_text.length * char_width) + (padding_x * 2)
+      
+      # Calculate modifier width if needed
+      modifier_width = 0
+      if modifier_code
+        modifier_width = (modifier_code.length * char_width) + (padding_x * 1.8)
+      end
+      
+      # Set dimensions
+      total_width = main_width + modifier_width
+      height = font_size + (padding_y * 2)  # Add padding for vertical centering
+      
+      filename = modifier_code.nil? ? 
+                 "aiul-#{license_code.downcase}.png" : 
+                 "aiul-#{license_code.downcase}-#{modifier_code.downcase}.png"
+      output_path = File.join(output_dir, filename)
+      
+      # Create new image with white background
+      MiniMagick::Tool::Convert.new do |convert|
+        convert.size "#{total_width.to_i}x#{height.to_i}"
+        convert << "xc:white"  # Create white canvas
+        
+        # Draw main license tag with black border
+        convert.fill "white"
+        convert.stroke "black"
+        convert.strokewidth border_width
+        convert.draw "rectangle #{border_width/2},#{border_width/2} #{main_width-border_width/2},#{height-border_width/2}"
+        
+        # Add license text - no stroke, just fill
+        convert.fill "black"
+        convert.stroke "none"  # Remove stroke to avoid thick text
+        convert.font "Arial"  # Use normal weight instead of bold
+        convert.pointsize font_size
+        convert.gravity "West"  # Align text to the left
+        convert.annotate "0x0+#{padding_x+2},0", main_text  # Use annotate for better text positioning
+        
+        # Add modifier if needed
+        if modifier_code
+          modifier_x = main_width
+          
+          # Draw black background with black border
+          convert.fill "black"
+          convert.stroke "black"
+          convert.strokewidth border_width
+          convert.draw "rectangle #{modifier_x + border_width/2},#{border_width/2} #{total_width-border_width/2},#{height-border_width/2}"
+          
+          # Add modifier text
+          convert.fill "white"  # Ensure text is white
+          convert.stroke "none"  # No stroke on text
+          convert.font "Arial"
+          convert.pointsize font_size
+          convert.gravity "West"  # Left-align
+          convert.annotate "0x0+#{modifier_x+padding_x+2},0", modifier_code  # Position from the left edge of the modifier section
+        end
+        
+        # Output to file
+        convert << output_path
+      end
+      
+      puts "Generated license image: #{filename}"
+    end
+  end
+end

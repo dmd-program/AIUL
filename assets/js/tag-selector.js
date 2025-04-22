@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Load Kanit font for tag graphics
   const fontLink = document.createElement('link');
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&display=swap';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap';
   fontLink.rel = 'stylesheet';
   document.head.appendChild(fontLink);
   
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add embedded font and styling
       svg += `<defs>
           <style>
-              @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&amp;display=swap');
+              @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&amp;display=swap');
               .tag-text { 
                   font-family: 'Kanit', sans-serif;
                   font-weight: 700;
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
               .modifier-text { 
                   font-family: 'Kanit', sans-serif;
-                  font-weight: 300;
+                  font-weight: 400;
                   font-size: ${fontSize}px;
                   fill: white;
               }
