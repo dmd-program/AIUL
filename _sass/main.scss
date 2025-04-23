@@ -10,6 +10,19 @@ $psu-white: #FFFFFF;
 /* Import tag generator styles */
 @import "tag-generator";
 
+/* Accessibility helper class for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* Base styling */
 body {
   font-family: 'Roboto', sans-serif;
@@ -41,100 +54,77 @@ header {
   .menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background-color: transparent;
+    border: none;
     cursor: pointer;
+    padding: 0;
+    margin-left: auto;
+    position: relative;
     
-    span {
-      width: 25px;
-      height: 3px;
-      background-color: $psu-white;
-      border-radius: 3px;
+    &:focus {
+      outline: 2px solid $psu-yellow;
+      outline-offset: 3px;
+    }
+    
+    .hamburger-icon {
+      display: block;
+      width: 100%;
+      height: 100%;
+      
+      .icon-bar {
+        display: block;
+        width: 100%;
+        height: 3px;
+        margin: 5px 0;
+        background-color: $psu-white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+    }
+    
+    .close-icon {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      
+      .icon-close {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: $psu-white;
+        border-radius: 3px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        
+        &:first-child {
+          transform: translateY(-50%) rotate(45deg);
+        }
+        
+        &:last-child {
+          transform: translateY(-50%) rotate(-45deg);
+        }
+      }
+    }
+    
+    &[aria-expanded="true"] {
+      .hamburger-icon {
+        display: none;
+      }
+      
+      .close-icon {
+        display: block;
+      }
     }
   }
 }
-/* Add to your main CSS file - likely _sass/main.scss or similar */
 
-/* Hide the checkbox */
-.menu-toggle-checkbox {
-  display: none;
-}
-
-/* Default state for desktop */
-.menu-toggle {
-  display: none;
-}
-
-/* Mobile navigation styles */
-@media (max-width: 768px) {
-  header {
-    position: relative;
-    justify-content: space-between;
-  }
-  
-  /* Style the menu toggle button */
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 21px;
-    cursor: pointer;
-    z-index: 102;
-    position: relative;
-  }
-  
-  .menu-toggle span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: #333;
-    transition: all 0.3s ease;
-  }
-  
-  /* Default hidden menu */
-  nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 100;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-  }
-  
-  nav ul {
-    flex-direction: column;
-    padding: 1rem;
-    margin: 0;
-  }
-  
-  nav ul li {
-    margin: 0.5rem 0;
-    width: 100%;
-    text-align: center;
-  }
-  
-  /* Checkbox checked state */
-  .menu-toggle-checkbox:checked ~ nav {
-    max-height: 300px; /* Arbitrary height that's taller than the menu */
-  }
-  
-  /* Transform hamburger to X when checked */
-  .menu-toggle-checkbox:checked ~ .menu-toggle span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-  
-  .menu-toggle-checkbox:checked ~ .menu-toggle span:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .menu-toggle-checkbox:checked ~ .menu-toggle span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
-}
 nav {
   ul {
     list-style: none;
@@ -538,9 +528,26 @@ table {
 @media (max-width: 768px) {
   header {
     padding: 1rem;
+    position: relative;
     
     .menu-toggle {
       display: flex;
+      z-index: 102;
+      
+      &[aria-expanded="true"] {
+        .hamburger-icon {
+          display: none;
+        }
+        
+        .close-icon {
+          display: block;
+        }
+      }
+      
+      &:focus-visible {
+        outline: 2px solid $psu-yellow;
+        outline-offset: 3px;
+      }
     }
     
     nav {
@@ -557,6 +564,7 @@ table {
       
       &.active {
         height: auto;
+        padding-bottom: 0.5rem;
         border-bottom: 1px solid rgba($psu-yellow, 0.2);
       }
       
@@ -574,6 +582,11 @@ table {
         display: block;
         padding: 0.75rem;
         border-bottom: 1px solid rgba($psu-light-blue, 0.2);
+        
+        &:focus {
+          outline: 2px solid $psu-yellow;
+          outline-offset: -2px;
+        }
         
         &.active {
           background-color: $psu-medium-blue;
@@ -617,50 +630,5 @@ table {
   
   .feature-cards, .card {
     margin: 0.5rem 0;
-  }
-}
-/* Mobile navigation styles */
-@media (max-width: 768px) {
-  /* Hide desktop nav by default on mobile */
-  nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: white;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    z-index: 100;
-  }
-  
-  /* Make menu items vertical */
-  nav ul {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0;
-  }
-  
-  nav ul li {
-    margin: 0;
-    width: 100%;
-    border-bottom: 1px solid #eee;
-  }
-  
-  nav ul li a {
-    display: block;
-    padding: 15px 20px;
-    text-align: left;
-  }
-  
-  nav ul li:last-child {
-    border-bottom: none;
-  }
-  
-  /* Show menu when checkbox is checked */
-  .menu-toggle-checkbox:checked ~ nav {
-    max-height: 500px; /* Large enough to fit all menu items */
   }
 }

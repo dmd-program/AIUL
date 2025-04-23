@@ -7,18 +7,66 @@
   <meta name="baseurl" content="{{ site.baseurl }}">
   <link rel="stylesheet" href="{{ "/assets/css/styles.css" | relative_url }}">
   {% seo %}
-</head>
-<body>
-  {% include header.html %}
   
-  {{ content }}
-  
-  {% include footer.html %}
-
+  <!-- Load custom JavaScript files from page front matter -->
   {% if page.custom_js %}
     {% for js_file in page.custom_js %}
       <script src="{{ site.baseurl }}/assets/js/{{ js_file }}.js"></script>
     {% endfor %}
   {% endif %}
+</head>
+<body>
+  {% include header.html %}
+    <main>
+      {{ content }}
+    </main>
+    {% include footer.html %}
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            // Check current state
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            
+            // Toggle the menu state
+            nav.classList.toggle('active');
+            
+            // Update ARIA attribute - toggle between true/false
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            
+            // Focus first menu item when opened
+            if (!isExpanded) {
+              setTimeout(function() {
+                const firstMenuItem = nav.querySelector('a');
+                if (firstMenuItem) {
+                  firstMenuItem.focus();
+                }
+              }, 100);
+            }
+          });
+          
+          // Add keyboard support
+          menuToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              menuToggle.click();
+            }
+          });
+          
+          // Close menu when pressing Escape key
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('active')) {
+              nav.classList.remove('active');
+              menuToggle.setAttribute('aria-expanded', 'false');
+              menuToggle.focus();
+            }
+          });
+        }
+      });
+    </script>
 </body>
 </html>
