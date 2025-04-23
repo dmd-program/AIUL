@@ -3,16 +3,23 @@
   <div class="logo tag-text">
     <a href="{{ site.baseurl }}/">AIUL</a>
   </div>
-  <nav>
+  <nav aria-label="Main navigation">
     <ul>
       {% for item in site.navigation %}
-        <li><a href="{{ item.link | relative_url }}" {% if page.url == item.link %}class="active"{% endif %}>{{ item.name }}</a></li>
+        <li><a href="{{ item.link | relative_url }}" {% if page.url == item.link %}class="active" aria-current="page"{% endif %}>{{ item.name }}</a></li>
       {% endfor %}
     </ul>
   </nav>
-  <div class="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
+    <span class="sr-only">Menu</span>
+    <div class="hamburger-icon">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="close-icon">
+      <span class="icon-close"></span>
+      <span class="icon-close"></span>
+    </div>
+  </button>
 </header>
