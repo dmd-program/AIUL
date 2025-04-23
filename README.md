@@ -38,9 +38,11 @@ This repository contains the Jekyll-based website for the AI Usage License (AIUL
 
 ### Generate static license graphics
 
+
 1. Make sure you are in the project root directory.
 
 2. Install node packages (if you haven't already):
+
    ```
    npm install
    ```
@@ -48,6 +50,7 @@ This repository contains the Jekyll-based website for the AI Usage License (AIUL
 3. Generate the static graphics:
    ```
    npm run generate-images
+
    
    # This generates .PNG images in the /assets/images/licenses folder
    ```
