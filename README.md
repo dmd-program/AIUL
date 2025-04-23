@@ -76,25 +76,6 @@ To deploy:
 
 ## Customization
 
-### Adding New Pages
-
-1. Create a new HTML file in the root directory
-2. Add YAML front matter with layout and title
-3. Add your content
-4. Update the navigation in `_config.yml` if needed
-
-Example:
-```html
----
-layout: default
-title: New Page
----
-
-<div class="page-content">
-  <h2>New Page Title</h2>
-  <p>Content goes here...</p>
-</div>
-```
 
 ### Changing Styles
 
