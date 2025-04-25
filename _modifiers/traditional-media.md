@@ -5,7 +5,7 @@ full_name: "Traditional Media"
 order: 6
 description: "For assignments involving physical art media where AI might be used for planning or reference"
 example: "Painting, drawing, sculpture, printmaking, ceramics, textiles"
-permalink: /licenses/traditional-media.html
+permalink: /modifiers/traditional-media.html
 
 ---
 

@@ -5,6 +5,7 @@ full_name: "Audio"
 order: 4
 description: "For assignments focusing on sound design or music"
 example: "Music composition, podcast production, sound design, audio mixing, voice recording"
+permalink: /modifiers/audio.html
 ---
 
 ## AU (Audio)
