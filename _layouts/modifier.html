@@ -5,11 +5,35 @@ layout: default
 <div class="page-content modifier-page">
   <h1>{{ page.title }} <span class="modifier-full-name">({{ page.full_name }})</span></h1>
   <main>
-  {{ content }}
-</main>
+    {{ content }}
+  </main>
   <div class="modifier-meta">
     <p><strong>Description:</strong> {{ page.description }}</p>
     <p><strong>Example Use Cases:</strong> {{ page.example }}</p>
   </div>
   
+  <div class="license-combinations">
+    <h2>License Combinations with {{ page.title }}</h2>
+    <p>This modifier can be combined with the following licenses to create specific AI usage policies:</p>
+    
+    <div class="combinations-grid">
+      {% for license in site.licenses %}
+        {% assign license_code = license.title | remove: 'AIUL-' %}
+        {% assign combination_path = license_code | downcase | append: '-' | append: page.title | downcase %}
+        {% assign combination_image_path = '/assets/images/licenses/aiul-' | append: combination_path | append: '.png' | relative_url %}
+        {% assign combination_url = '/combinations/' | append: combination_path | append: '.html' | relative_url %}
+        
+        <div class="combination-card">
+          <div class="combination-image">
+            <img src="{{ combination_image_path }}" alt="AIUL-{{ license_code }}-{{ page.title }}" />
+          </div>
+          <div class="combination-info">
+            <h3>AIUL-{{ license_code }}-{{ page.title }}</h3>
+            <p>{{ license.full_name }} for {{ page.full_name }}</p>
+            <a href="{{ combination_url }}" class="view-combination">View Combination</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>

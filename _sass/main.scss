@@ -655,7 +655,6 @@ table {
         p {
           font-size: 0.9rem;
           margin-bottom: 1rem;
-          flex-grow: 1;
         }
         
         a {
@@ -731,6 +730,169 @@ table {
     
     button.syllabus-copy {
       background-color: $psu-medium-blue;
+    }
+  }
+}
+
+/* Combination detail page styles */
+.combination-detail {
+  .combination-image {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+    
+    img {
+      max-width: 300px;
+      height: auto;
+    }
+  }
+  
+  .combination-content {
+    margin-bottom: 2rem;
+  }
+  
+  .combination-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+    
+    .license-details, 
+    .modifier-details {
+      background-color: rgba($psu-light-blue, 0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      
+      h3 {
+        margin-top: 0;
+        color: $psu-blue;
+        border-bottom: 1px solid $psu-light-blue;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      h4 {
+        color: $psu-medium-blue;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      ul {
+        margin-top: 0.5rem;
+      }
+      
+      .button-link {
+        display: inline-block;
+        background-color: $psu-blue;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.2s;
+        border-bottom: none;
+        
+        &:hover {
+          background-color: $psu-medium-blue;
+          transform: translateY(-2px);
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+      }
+    }
+  }
+  
+  .other-combinations {
+    h3 {
+      margin-top: 2rem;
+      color: $psu-blue;
+    }
+  }
+}
+
+/* Modifier page styles */
+.modifier-page {
+  .modifier-full-name {
+    font-weight: normal;
+    font-size: 0.85em;
+    color: $psu-medium-blue;
+  }
+  
+  .license-combinations {
+    margin-top: 3rem;
+    
+    h2 {
+      margin-bottom: 1rem;
+    }
+    
+    .combinations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .combination-card {
+      border: 1px solid $psu-light-gray;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .combination-image {
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba($psu-light-blue, 0.05);
+        
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+      }
+      
+      .combination-info {
+        padding: 1rem;
+        
+        h3 {
+          margin-top: 0;
+          margin-bottom: 0.5rem;
+          font-size: 1.1rem;
+          color: $psu-blue;
+        }
+        
+        p {
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+          color: $psu-gray;
+        }
+        
+        .view-combination {
+          display: inline-block;
+          background-color: $psu-blue;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          text-decoration: none;
+          transition: all 0.2s;
+          border-bottom: none;
+          
+          &:hover {
+            background-color: $psu-medium-blue;
+            transform: translateY(-2px);
+          }
+        }
+      }
     }
   }
 }

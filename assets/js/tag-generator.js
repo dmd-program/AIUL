@@ -430,8 +430,17 @@ document.addEventListener('DOMContentLoaded', function() {
             basePath = urlParts.slice(0, aiulIndex + 1).join('/').replace(origin, '');
         }
         
-        // Construct full URLs for license and image
-        const licenseUrl = `${origin}${basePath}/licenses/${tagType.toLowerCase()}.html`;
+        // Construct full URLs for license/combination and image
+        let licenseUrl;
+        if (useModifier) {
+            // If there's a modifier, link to the combination page
+            licenseUrl = `${origin}${basePath}/combinations/${tagType.toLowerCase()}-${modifierType.toLowerCase()}.html`;
+        } else {
+            // If no modifier, just link to the license page
+            licenseUrl = `${origin}${basePath}/licenses/${tagType.toLowerCase()}.html`;
+        }
+        
+        // Image path is always the same pattern
         const licenseImageUrl = `${origin}${basePath}/assets/images/licenses/${tagCode.toLowerCase()}.png`;
         
         // Generate code using a link to a hosted image on the website
