@@ -10,6 +10,43 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Fonts loaded and ready for use");
     });
     
+    // License and modifier data
+    let licenseData = {}; 
+    let modifierData = {};
+    
+    // Fetch license data from the JSON file
+    fetch('/aiul/license-data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('License data loaded successfully', data);
+            
+            // Convert arrays to lookup objects for easier access
+            licenseData = data.licenses.reduce((acc, license) => {
+                acc[license.code] = license;
+                return acc;
+            }, {});
+            
+            modifierData = data.modifiers.reduce((acc, modifier) => {
+                acc[modifier.code] = modifier;
+                return acc;
+            }, {});
+            
+            // Update any initial display with the loaded data
+            if (tagTypeSelect.value) {
+                updateTagText(tagTypeSelect.value);
+            }
+            updatePreview();
+        })
+        .catch(error => {
+            console.error('Error loading license data:', error);
+            console.warn('Falling back to hardcoded values');
+        });
+    
     // Get elements
     const tagTypeSelect = document.getElementById('tagType');
     const useModifierCheckbox = document.getElementById('useModifier');
@@ -266,33 +303,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const useModifier = useModifierCheckbox.checked;
         const modifierType = useModifier ? modifierTypeSelect.value : null;
         
-        // Get the license name based on the tag type
+        // Get the license name and description - use dynamic data if available
         let licenseName, licenseDesc;
-        switch(tagType) {
-            case 'NA':
-                licenseName = 'Not Allowed';
-                licenseDesc = 'no AI tools are permitted. All work must be entirely your own without assistance from AI tools.';
-                break;
-            case 'WA':
-                licenseName = 'With Approval';
-                licenseDesc = 'limited AI assistance is permitted only with instructor pre-approval. If you wish to use any AI tools, you must request permission in advance and document how they will be used.';
-                break;
-            case 'CD':
-                licenseName = 'Conceptual Development';
-                licenseDesc = 'you may use AI tools for research and idea generation, but the final work must be entirely your own. You must document any AI tools used in your process.';
-                break;
-            case 'TC':
-                licenseName = 'Transformative Collaboration';
-                licenseDesc = 'you may use AI as a collaborative tool, but you must significantly transform and modify any AI outputs. Your work should demonstrate critical thinking and creative direction.';
-                break;
-            case 'DP':
-                licenseName = 'Directed Production';
-                licenseDesc = 'you may use AI-assisted creation with clear direction and modification from you. The concept, direction, and post-processing should demonstrate your creative input.';
-                break;
-            case 'IU':
-                licenseName = 'Integrated Usage';
-                licenseDesc = 'AI usage is a required component of this assignment. You are expected to demonstrate sophisticated use of AI tools and document your process thoroughly.';
-                break;
+        
+        if (licenseData[tagType]) {
+            // Use data from our loaded JSON
+            licenseName = licenseData[tagType].fullName;
+            licenseDesc = licenseData[tagType].syllabusText;
+        } else {
+            // Fallback to hardcoded values
+            switch(tagType) {
+                case 'NA':
+                    licenseName = 'Not Allowed';
+                    licenseDesc = 'no AI tools are permitted. All work must be entirely your own without assistance from AI tools.';
+                    break;
+                case 'WA':
+                    licenseName = 'With Approval';
+                    licenseDesc = 'limited AI assistance is permitted only with instructor pre-approval. If you wish to use any AI tools, you must request permission in advance and document how they will be used.';
+                    break;
+                case 'CD':
+                    licenseName = 'Conceptual Development';
+                    licenseDesc = 'you may use AI tools for research and idea generation, but the final work must be entirely your own. You must document any AI tools used in your process.';
+                    break;
+                case 'TC':
+                    licenseName = 'Transformative Collaboration';
+                    licenseDesc = 'you may use AI as a collaborative tool, but you must significantly transform and modify any AI outputs. Your work should demonstrate critical thinking and creative direction.';
+                    break;
+                case 'DP':
+                    licenseName = 'Directed Production';
+                    licenseDesc = 'you may use AI-assisted creation with clear direction and modification from you. The concept, direction, and post-processing should demonstrate your creative input.';
+                    break;
+                case 'IU':
+                    licenseName = 'Integrated Usage';
+                    licenseDesc = 'AI usage is a required component of this assignment. You are expected to demonstrate sophisticated use of AI tools and document your process thoroughly.';
+                    break;
+            }
         }
         
         // Get the modifier description if applicable
@@ -300,39 +345,46 @@ document.addEventListener('DOMContentLoaded', function() {
         let modifierDesc = '';
         
         if (useModifier && modifierType) {
-            switch(modifierType) {
-                case 'WR':
-                    modifierName = 'Writing';
-                    modifierDesc = 'This applies specifically to written content.';
-                    break;
-                case 'IM':
-                    modifierName = 'Image';
-                    modifierDesc = 'This applies specifically to visual content.';
-                    break;
-                case 'VD':
-                    modifierName = 'Video';
-                    modifierDesc = 'This applies specifically to video content.';
-                    break;
-                case 'AU':
-                    modifierName = 'Audio';
-                    modifierDesc = 'This applies specifically to audio content.';
-                    break;
-                case '3D':
-                    modifierName = '3D Design';
-                    modifierDesc = 'This applies specifically to 3D modeling and design.';
-                    break;
-                case 'TR':
-                    modifierName = 'Traditional Media';
-                    modifierDesc = 'This applies specifically to physical art media.';
-                    break;
-                case 'MX':
-                    modifierName = 'Mixed Media';
-                    modifierDesc = 'This applies to projects combining multiple media types.';
-                    break;
-                case 'CO':
-                    modifierName = 'Code';
-                    modifierDesc = 'This applies specifically to code and software development.';
-                    break;
+            if (modifierData[modifierType]) {
+                // Use data from our loaded JSON
+                modifierName = modifierData[modifierType].fullName;
+                modifierDesc = `This applies specifically to ${modifierName.toLowerCase()}.`;
+            } else {
+                // Fallback to hardcoded values
+                switch(modifierType) {
+                    case 'WR':
+                        modifierName = 'Writing';
+                        modifierDesc = 'This applies specifically to written content.';
+                        break;
+                    case 'IM':
+                        modifierName = 'Image';
+                        modifierDesc = 'This applies specifically to visual content.';
+                        break;
+                    case 'VD':
+                        modifierName = 'Video';
+                        modifierDesc = 'This applies specifically to video content.';
+                        break;
+                    case 'AU':
+                        modifierName = 'Audio';
+                        modifierDesc = 'This applies specifically to audio content.';
+                        break;
+                    case '3D':
+                        modifierName = '3D Design';
+                        modifierDesc = 'This applies specifically to 3D modeling and design.';
+                        break;
+                    case 'TR':
+                        modifierName = 'Traditional Media';
+                        modifierDesc = 'This applies specifically to physical art media.';
+                        break;
+                    case 'MX':
+                        modifierName = 'Mixed Media';
+                        modifierDesc = 'This applies to projects combining multiple media types.';
+                        break;
+                    case 'CO':
+                        modifierName = 'Code';
+                        modifierDesc = 'This applies specifically to code and software development.';
+                        break;
+                }
             }
         }
         
@@ -397,6 +449,12 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
     }
     
     function getTagFullName(tagType) {
+        // Try to get the data from our loaded JSON first
+        if (licenseData[tagType]) {
+            return licenseData[tagType].fullName;
+        }
+        
+        // Fall back to hardcoded values if data isn't loaded yet
         switch(tagType) {
             case 'NA': return 'Not Allowed';
             case 'WA': return 'With Approval';
@@ -409,6 +467,12 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
     }
     
     function getModifierFullName(modifierType) {
+        // Try to get the data from our loaded JSON first
+        if (modifierData[modifierType]) {
+            return modifierData[modifierType].fullName;
+        }
+        
+        // Fall back to hardcoded values if data isn't loaded yet
         switch(modifierType) {
             case 'WR': return 'Writing';
             case 'IM': return 'Image';

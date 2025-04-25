@@ -5,6 +5,7 @@ full_name: "Writing"
 order: 1
 description: "For assignments involving substantial written content"
 example: "Essays, research papers, creative writing, reports, scripts, poetry"
+permalink: /licenses/writing.html
 ---
 
 ## WR (Writing)

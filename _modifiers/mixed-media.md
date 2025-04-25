@@ -5,6 +5,8 @@ full_name: "Mixed Media"
 order: 7
 description: "For assignments that span multiple media types"
 example: "Multimedia installations, websites, interactive experiences, transmedia projects"
+permalink: /licenses/mixed-media.html
+
 ---
 
 ## MX (Mixed Media)

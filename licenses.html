@@ -21,7 +21,7 @@ title: AIUL Licenses
     <tbody>
       {% for license in site.licenses %}
       <tr>
-        <td><strong>{{ license.title }}</strong> ({{ license.full_name }})</td>
+        <td><strong><a href="{{ license.url | relative_url }}">{{ license.title }}</a></strong> ({{ license.full_name }})</td>
         <td>{{ license.description }}</td>
         <td>{{ license.example }}</td>
       </tr>
@@ -44,7 +44,7 @@ title: AIUL Licenses
     <tbody>
       {% for modifier in site.modifiers %}
       <tr>
-        <td><strong>-{{ modifier.title }}</strong> ({{ modifier.full_name }})</td>
+        <td><strong><a href="{{ modifier.permalink | default: modifier.url | relative_url }}">-{{ modifier.title }}</a></strong> ({{ modifier.full_name }})</td>
         <td>{{ modifier.description }}</td>
         <td>{{ modifier.example }}</td>
       </tr>
@@ -52,16 +52,30 @@ title: AIUL Licenses
     </tbody>
   </table>
 
-  <p>If an assignment involves multiple media types but focuses primarily on one, you can use the primary media suffix. For more complex assignments, the <strong>-MX</strong> suffix is appropriate.</p>
+  <p>If an assignment involves multiple media types but focuses primarily on one, you can use the primary media suffix. For more complex assignments, the <strong><a href="{% assign mx_modifier = site.modifiers | where: 'title', 'MX' | first %}{{ mx_modifier.permalink | default: mx_modifier.url | relative_url }}">-MX</a></strong> suffix is appropriate.</p>
 
   <h3>Examples of Combined Tags</h3>
   
   <ul>
-    <li><strong>AIUL-NA-WR</strong>: A writing assignment where no AI text generation is permitted.</li>
-    <li><strong>AIUL-CD-IM</strong>: An image creation assignment where AI can be used for inspiration or research but the final image must be created without AI generation.</li>
-    <li><strong>AIUL-TC-AU</strong>: An audio production assignment where AI tools can be used collaboratively, but with significant student input and direction.</li>
-    <li><strong>AIUL-DP-VD</strong>: A video project where AI-assisted creation is permitted with student direction and editing.</li>
-    <li><strong>AIUL-IU-MX</strong>: A mixed-media project that requires the integration of AI tools as a core learning objective.</li>
+    {% assign na_license = site.licenses | where: "title", "AIUL-NA" | first %}
+    {% assign wr_modifier = site.modifiers | where: "title", "WR" | first %}
+    <li><strong><a href="{{ na_license.url | relative_url }}">AIUL-NA</a>-<a href="{{ wr_modifier.permalink | default: wr_modifier.url | relative_url }}">WR</a></strong>: A writing assignment where no AI text generation is permitted.</li>
+    
+    {% assign cd_license = site.licenses | where: "title", "AIUL-CD" | first %}
+    {% assign im_modifier = site.modifiers | where: "title", "IM" | first %}
+    <li><strong><a href="{{ cd_license.url | relative_url }}">AIUL-CD</a>-<a href="{{ im_modifier.permalink | default: im_modifier.url | relative_url }}">IM</a></strong>: An image creation assignment where AI can be used for inspiration or research but the final image must be created without AI generation.</li>
+    
+    {% assign tc_license = site.licenses | where: "title", "AIUL-TC" | first %}
+    {% assign au_modifier = site.modifiers | where: "title", "AU" | first %}
+    <li><strong><a href="{{ tc_license.url | relative_url }}">AIUL-TC</a>-<a href="{{ au_modifier.permalink | default: au_modifier.url | relative_url }}">AU</a></strong>: An audio production assignment where AI tools can be used collaboratively, but with significant student input and direction.</li>
+    
+    {% assign dp_license = site.licenses | where: "title", "AIUL-DP" | first %}
+    {% assign vd_modifier = site.modifiers | where: "title", "VD" | first %}
+    <li><strong><a href="{{ dp_license.url | relative_url }}">AIUL-DP</a>-<a href="{{ vd_modifier.permalink | default: vd_modifier.url | relative_url }}">VD</a></strong>: A video project where AI-assisted creation is permitted with student direction and editing.</li>
+    
+    {% assign iu_license = site.licenses | where: "title", "AIUL-IU" | first %}
+    {% assign mx_modifier = site.modifiers | where: "title", "MX" | first %}
+    <li><strong><a href="{{ iu_license.url | relative_url }}">AIUL-IU</a>-<a href="{{ mx_modifier.permalink | default: mx_modifier.url | relative_url }}">MX</a></strong>: A mixed-media project that requires the integration of AI tools as a core learning objective.</li>
   </ul>
   
   <h3>Implementation Resources</h3>
