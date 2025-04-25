@@ -5,7 +5,7 @@ full_name: "Image"
 order: 2
 description: "For assignments involving static visual content"
 example: "Photography, digital illustration, graphic design, posters, data visualization"
-permalink: /licenses/image.html
+permalink: /modifiers/image.html
 
 ---
 
