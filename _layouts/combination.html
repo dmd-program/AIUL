@@ -1,0 +1,136 @@
+---
+layout: default
+---
+
+<div class="page-content license-detail combination-detail">
+  <div class="combination-header">
+    <div class="license-tag">
+      <div class="tag-container tag-size-medium">
+        <div class="tag-main">
+          <span class="tag-text">{{ page.title }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="license-info">
+      <h1>{{ page.title }}</h1>
+      <p class="license-description">{{ page.license_name }} for {{ page.modifier_name }}</p>
+    </div>
+  </div>
+
+  {% if page.combination_image_path %}
+  <div class="combination-image">
+    <img src="{{ page.combination_image_path | relative_url }}" alt="{{ page.title }}" />
+  </div>
+  {% endif %}
+  
+  <div class="license-content combination-content">
+    <h2>About This License Combination</h2>
+    <p>This is a combination of the <a href="{{ page.license_url | relative_url }}">{{ page.license_code }}</a> license ({{ page.license_name }}) 
+    and the <a href="{{ page.modifier_url | relative_url }}">{{ page.modifier_code }}</a> modifier ({{ page.modifier_name }}).</p>
+    
+    <div class="combination-details">
+      <div class="license-details">
+        <h3>License: {{ page.license_code }} ({{ page.license_name }})</h3>
+        <p><strong>Description:</strong> {{ page.license_description }}</p>
+        <p><strong>What it means:</strong> {{ page.license_syllabus }}</p>
+        
+        <div class="when-to-use">
+          <h4>When to Use</h4>
+          <ul>
+            {% for item in page.license_when_to_use %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <p><a href="{{ page.license_url | relative_url }}" class="button-link">View Full {{ page.license_code }} License</a></p>
+      </div>
+      
+      <div class="modifier-details">
+        <h3>Modifier: {{ page.modifier_code }} ({{ page.modifier_name }})</h3>
+        <p><strong>Description:</strong> {{ page.modifier_description }}</p>
+        
+        <div class="applicable-tools">
+          <h4>Applicable Tools</h4>
+          {{ page.modifier_applicable_tools_html }}
+        </div>
+        
+        <div class="considerations">
+          <h4>Considerations</h4>
+          {{ page.modifier_considerations_html }}
+        </div>
+        
+        <p><a href="{{ page.modifier_url | relative_url }}" class="button-link">View Full {{ page.modifier_code }} Modifier</a></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="license-syllabus">
+    <h2>Sample Syllabus Language</h2>
+    <div class="syllabus-example" id="syllabusText">
+      <p><strong>{{ page.title }}:</strong> This assignment is tagged {{ page.title }} ({{ page.license_name }} for {{ page.modifier_name }}), which means {{ page.license_syllabus }} This applies specifically to {{ page.modifier_name | downcase }}.</p>
+      
+      {% if page.license_code != 'AIUL-NA' and page.license_code != 'AIUL-WA' %}
+      <p><strong>Documentation Requirement:</strong> For this assignment, you must include documentation of your AI usage process including:</p>
+      <ul>
+        <li>Which AI tools you used</li>
+        <li>How you used them in your process</li>
+        <li>What prompts or inputs you provided</li>
+        <li>How you modified or integrated AI outputs</li>
+        <li>Your reflections on the human-AI collaboration process</li>
+      </ul>
+      {% endif %}
+    </div>
+    <button class="copy-button syllabus-copy" id="copySyllabus">Copy Syllabus Language</button>
+  </div>
+  
+  <div class="license-navigation">
+    <h2>Other License Combinations</h2>
+    <div class="other-combinations">
+      <h3>Other {{ page.license_code }} combinations:</h3>
+      <div class="license-grid">
+        {% for combo in page.related_license_combinations %}
+          <a href="{{ combo.url | relative_url }}" class="license-link">
+            <div class="license-icon">{{ combo.title }}</div>
+            <div class="license-name">{{ combo.full_name }}</div>
+          </a>
+        {% endfor %}
+      </div>
+      
+      <h3>Other {{ page.modifier_code }} combinations:</h3>
+      <div class="license-grid">
+        {% for combo in page.related_modifier_combinations %}
+          <a href="{{ combo.url | relative_url }}" class="license-link">
+            <div class="license-icon">{{ combo.title }}</div>
+            <div class="license-name">{{ combo.full_name }}</div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Copy to clipboard functionality
+  const copySyllabus = document.getElementById('copySyllabus');
+  const syllabusText = document.getElementById('syllabusText');
+  
+  if (copySyllabus && syllabusText) {
+    copySyllabus.addEventListener('click', function() {
+      navigator.clipboard.writeText(syllabusText.textContent)
+        .then(() => {
+          const originalText = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => {
+            this.textContent = originalText;
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+    });
+  }
+});
+</script>
