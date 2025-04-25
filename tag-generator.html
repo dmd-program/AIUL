@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIUL Tag Generator - AIUL - AI Usage License Project</title>
+  <meta name="baseurl" content="/aiul">
+  <link rel="stylesheet" href="/aiul/assets/css/styles.css">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>AIUL Tag Generator | AIUL - AI Usage License Project</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="AIUL Tag Generator" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Standardizing AI usage in digital arts, empowering educators and students with clear AI usage guidelines." />
+<meta property="og:description" content="Standardizing AI usage in digital arts, empowering educators and students with clear AI usage guidelines." />
+<link rel="canonical" href="/aiul/tag-generator.html" />
+<meta property="og:url" content="/aiul/tag-generator.html" />
+<meta property="og:site_name" content="AIUL - AI Usage License Project" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="AIUL Tag Generator" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Standardizing AI usage in digital arts, empowering educators and students with clear AI usage guidelines.","headline":"AIUL Tag Generator","url":"/aiul/tag-generator.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <!-- Load custom JavaScript files from page front matter -->
+  
+    
+      <script src="/aiul/assets/js/html2canvas.js"></script>
+    
+      <script src="/aiul/assets/js/tag-generator.js"></script>
+    
+  
+</head>
+<body>
+  <!-- Header & Navigation -->
+<header>
+  <div class="logo tag-text">
+    <a href="/aiul/">AIUL</a>
+  </div>
+  <nav aria-label="Main navigation">
+    <ul>
+      
+        <li><a href="/aiul/" >Home</a></li>
+      
+        <li><a href="/aiul/licenses.html" >Licenses</a></li>
+      
+        <li><a href="/aiul/guide.html" >Guide</a></li>
+      
+        <li><a href="/aiul/tag-generator.html" class="active" aria-current="page">Tag Generator</a></li>
+      
+        <li><a href="/aiul/resources.html" >Resources</a></li>
+      
+    </ul>
+  </nav>
+  <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
+    <span class="sr-only">Menu</span>
+    <div class="hamburger-icon">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="close-icon">
+      <span class="icon-close"></span>
+      <span class="icon-close"></span>
+    </div>
+  </button>
+</header>
+
+    <main>
+      <div class="page-content">
+  <h2>AIUL Tag Generator</h2>
+  <p>Create custom AIUL tag graphics for different assignment types and media formats. These tags can be used in your syllabus, assignment instructions, or other course materials.</p>
+  
+  <div class="generator-container">
+    <div class="generator-controls">
+      <h3>Configure Your Tag</h3>
+      
+      <div class="form-group">
+        <label for="tagType">AIUL License Level:</label>
+        <select id="tagType" class="tag-select">
+          
+          <option value="NA">AIUL-NA (Not Allowed)</option>
+          
+          <option value="WA">AIUL-WA (With Approval)</option>
+          
+          <option value="CD">AIUL-CD (Conceptual Development)</option>
+          
+          <option value="TC">AIUL-TC (Transformative Collaboration)</option>
+          
+          <option value="DP">AIUL-DP (Directed Production)</option>
+          
+          <option value="IU">AIUL-IU (Integrated Usage)</option>
+          
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="useModifier">Include Media Modifier?</label>
+        <input type="checkbox" id="useModifier">
+      </div>
+      
+      <div class="form-group modifier-group" style="display: none;">
+        <label for="modifierType">Media Type:</label>
+        <select id="modifierType" class="tag-select">
+          
+          <option value="WR">WR (Writing)</option>
+          
+          <option value="IM">IM (Image)</option>
+          
+          <option value="VD">VD (Video)</option>
+          
+          <option value="AU">AU (Audio)</option>
+          
+          <option value="3D">3D (3D Design)</option>
+          
+          <option value="TR">TR (Traditional Media)</option>
+          
+          <option value="MX">MX (Mixed Media)</option>
+          
+          <option value="CO">CO (Code)</option>
+          
+        </select>
+      </div>
+      
+      <button id="generateTag">Generate Tag</button>
+    </div>
+    
+    <div class="generator-preview">
+      <h3>Preview</h3>
+      <!-- Make sure this element structure is correctly structured for the JS to update -->
+      <div id="tagPreview">
+        <div id="tagContainer" class="tag-size-medium">
+          <div class="tag-main">
+            <span class="tag-text">AIUL-NA</span>
+          </div>
+          <div class="tag-modifier" style="display:none;">
+            <span class="modifier-text">WR</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="download-options">
+        <button id="downloadPNG" disabled>Download PNG</button>
+        <button id="downloadSVG" disabled>Download SVG</button>
+        <div class="download-message"></div>
+      </div>
+      
+      <div class="font-notice" style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+        <p><strong>Note:</strong> For best results, click "Generate Tag" before downloading. The generated files use the Kanit font. If the font doesn't appear correctly in your downloads, try refreshing the page to ensure the font is fully loaded.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Syllabus language section -->
+  <div id="syllabusLanguage" style="display: none; margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem;">
+    <h3>Sample Syllabus Language</h3>
+    <div class="syllabus-content">
+      <div style="background: #f5f5f5; padding: 1.5rem; border-left: 4px solid #0f4c81; margin: 1rem 0;">
+        <p id="syllabusText"></p>
+      </div>
+      <button id="copySyllabus" class="secondary-button">Copy to Clipboard</button>
+    </div>
+  </div>
+  
+  <!-- HTML Embed Code section -->
+  <div id="embedCodeSection" style="display: none; margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem;">
+    <h3>HTML Embed Code</h3>
+    <p>Copy and paste this code to embed the AIUL license on your website or LMS:</p>
+    
+    <div class="embed-code-container" style="background: #f5f5f5; padding: 1.5rem; border-left: 4px solid #0f4c81; margin: 1rem 0; position: relative;">
+      <pre id="embedCode" style="white-space: pre-wrap; word-break: break-all; font-family: monospace; margin: 0; padding: 0;"></pre>
+      <button id="copyEmbedCode" class="secondary-button" style="margin-top: 1rem;">Copy Code</button>
+    </div>
+    
+    <div class="embed-preview" style="margin-top: 1.5rem;">
+      <h4>Embed Preview</h4>
+      <div id="embedPreview" style="padding: 1rem; border: 1px dashed #ccc; margin-top: 0.5rem;"></div>
+    </div>
+  </div>
+  
+  <div class="explanation">
+    <h3>About AIUL Tags</h3>
+    <p>AIUL (AI Usage License) tags provide a clear, standardized way to communicate expectations around AI tool usage in educational assignments. Each tag indicates a specific level of permitted AI usage, from completely prohibited (AIUL-NA) to fully integrated (AIUL-IU).</p>
+    
+    <h4>Optional Media-Specific Suffixes</h4>
+    <p>Media-specific suffixes provide additional clarity for different types of assignments:</p>
+    <ul>
+      
+      <li><strong>WR</strong> - Writing</li>
+      
+      <li><strong>IM</strong> - Image</li>
+      
+      <li><strong>VD</strong> - Video</li>
+      
+      <li><strong>AU</strong> - Audio</li>
+      
+      <li><strong>3D</strong> - 3D Design</li>
+      
+      <li><strong>TR</strong> - Traditional Media</li>
+      
+      <li><strong>MX</strong> - Mixed Media</li>
+      
+      <li><strong>CO</strong> - Code</li>
+      
+    </ul>
+    
+    <p>For more information about AIUL tags and implementation guidelines, please visit our <a href="/aiul/licenses.html">Licenses</a> and <a href="/aiul/guide.html">Usage Guidelines</a> pages.</p>
+  </div>
+</div>
+    </main>
+    <!-- Footer -->
+<footer>
+  <p class="bold">AI Usage License Project created by faculty in the Penn State DMD Program. CC-BY-4.0</p>
+  <p>
+    Submit issues or suggestions here: <a class="bold" href="https://github.com/dmd-program/aiul/issues">https://github.com/dmd-program/aiul/issues</a>
+  </p>
+  <p>
+    Note: This project is an intial draft to gather community feedback, and is not necessarily a functional website nor does it contain finalized language.
+  </p>
+  <p class="footer-links">
+    <a href="/aiul/legal-disclaimer.html">Legal Disclaimer</a>
+  </p>
+</footer>
+
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            // Check current state
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            
+            // Toggle the menu state
+            nav.classList.toggle('active');
+            
+            // Update ARIA attribute - toggle between true/false
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            
+            // Focus first menu item when opened
+            if (!isExpanded) {
+              setTimeout(function() {
+                const firstMenuItem = nav.querySelector('a');
+                if (firstMenuItem) {
+                  firstMenuItem.focus();
+                }
+              }, 100);
+            }
+          });
+          
+          // Add keyboard support
+          menuToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              menuToggle.click();
+            }
+          });
+          
+          // Close menu when pressing Escape key
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('active')) {
+              nav.classList.remove('active');
+              menuToggle.setAttribute('aria-expanded', 'false');
+              menuToggle.focus();
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

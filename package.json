@@ -1,0 +1,12 @@
+{
+  "name": "aiul-image-generator",
+  "version": "1.0.0",
+  "description": "Generates static license images for the AIUL Project",
+  "scripts": {
+    "generate-images": "node scripts/generate-license-images.js"
+  },
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "jsdom": "^22.1.0"
+  }
+}

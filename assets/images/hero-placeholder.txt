@@ -1,0 +1,10 @@
+# Images Directory
+
+This directory contains images used throughout the site.
+
+## Required Images
+
+- `hero-image.jpg` - The hero background image (1920x800px recommended)
+- Add other images as needed for the site
+
+Note: You'll need to add the actual image files to this directory. This README file is just a placeholder to ensure the directory is created in the repository.
