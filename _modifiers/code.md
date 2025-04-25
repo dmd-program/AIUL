@@ -5,6 +5,8 @@ full_name: "Code"
 order: 8
 description: "For assignments involving programming or software development"
 example: "Software development, web applications, algorithms, data science scripts, computational art"
+permalink: /licenses/code.html
+
 ---
 
 ## CO (Code)

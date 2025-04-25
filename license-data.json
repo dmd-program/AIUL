@@ -1,0 +1,28 @@
+---
+layout: null
+---
+{
+  "licenses": [
+    {% for license in site.licenses %}
+    {
+      "code": "{{ license.title | remove: 'AIUL-' }}",
+      "fullName": "{{ license.full_name }}",
+      "description": {{ license.description | jsonify }},
+      "syllabusText": {{ license.syllabus_text | jsonify }},
+      "example": {{ license.example | jsonify }},
+      "order": {{ license.order }}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "modifiers": [
+    {% for modifier in site.modifiers %}
+    {
+      "code": "{{ modifier.title }}",
+      "fullName": "{{ modifier.full_name }}",
+      "description": {{ modifier.description | jsonify }},
+      "example": {{ modifier.example | jsonify }},
+      "order": {{ modifier.order }}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}

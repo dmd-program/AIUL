@@ -5,6 +5,8 @@ full_name: "Video"
 order: 3
 description: "For assignments involving moving images"
 example: "Films, animations, motion graphics, video essays, promotional videos"
+permalink: /licenses/video.html
+
 ---
 
 ## VD (Video)

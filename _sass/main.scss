@@ -569,6 +569,172 @@ table {
   }
 }
 
+/* License detail page styles */
+.license-detail {
+  .license-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+    
+    .license-tag {
+      flex-shrink: 0;
+    }
+    
+    .license-info {
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        color: $psu-blue;
+        font-size: 1.8rem;
+      }
+      
+      .license-description {
+        font-size: 1.1rem;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .license-modifiers {
+    margin-top: 3rem;
+    
+    h2 {
+      margin-bottom: 1rem;
+    }
+    
+    .modifier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .modifier-item {
+      display: flex;
+      border: 1px solid $psu-light-gray;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+      height: 100%;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .modifier-image {
+        width: 120px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background-color: rgba($psu-light-blue, 0.05);
+        
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+      }
+      
+      .modifier-info {
+        padding: 1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        
+        h3 {
+          margin-top: 0;
+          margin-bottom: 0.5rem;
+          font-size: 1.1rem;
+          color: $psu-blue;
+        }
+        
+        p {
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+          flex-grow: 1;
+        }
+        
+        a {
+          align-self: flex-start;
+          color: $psu-blue;
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 0.9rem;
+          border-bottom: 1px solid $psu-light-blue;
+          padding-bottom: 2px;
+          margin-top: auto;
+          
+          &:hover {
+            color: $psu-medium-blue;
+            border-color: $psu-medium-blue;
+          }
+        }
+      }
+    }
+  }
+  
+  .license-navigation {
+    margin-top: 3rem;
+    
+    .license-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      
+      .license-link {
+        text-decoration: none;
+        background-color: rgba($psu-light-blue, 0.05);
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        
+        &:hover {
+          background-color: rgba($psu-light-blue, 0.1);
+          transform: translateY(-3px);
+          border-color: $psu-light-blue;
+        }
+        
+        .license-icon {
+          font-weight: bold;
+          font-size: 1.2rem;
+          color: $psu-blue;
+          margin-bottom: 0.5rem;
+        }
+        
+        .license-name {
+          font-size: 0.9rem;
+          color: $psu-gray;
+        }
+      }
+    }
+  }
+  
+  .license-syllabus {
+    margin-top: 3rem;
+    background-color: rgba($psu-light-blue, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    
+    .syllabus-example {
+      margin-bottom: 1rem;
+    }
+    
+    button.syllabus-copy {
+      background-color: $psu-medium-blue;
+    }
+  }
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   header {

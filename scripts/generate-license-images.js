@@ -39,9 +39,30 @@ class MockElement {
 
 const downloadMessage = new MockElement();
 
-// Define license types and modifiers
-const licenseTypes = ['NA', 'WA', 'CD', 'TC', 'DP', 'IU'];
-const modifierTypes = ['WR', 'IM', 'VD', 'AU', '3D', 'TR', 'MX', 'CO'];
+// Read license and modifier types from the JSON data file
+let licenseTypes = ['NA', 'WA', 'CD', 'TC', 'DP', 'IU']; // Default fallback values
+let modifierTypes = ['WR', 'IM', 'VD', 'AU', '3D', 'TR', 'MX', 'CO']; // Default fallback values
+
+// Try to load from the JSON file (which will be generated during Jekyll build)
+try {
+  const dataFilePath = path.join(__dirname, '..', '_site', 'license-data.json');
+  if (fs.existsSync(dataFilePath)) {
+    const jsonData = JSON.parse(fs.readFileSync(dataFilePath));
+    if (jsonData.licenses && Array.isArray(jsonData.licenses) && jsonData.licenses.length > 0) {
+      licenseTypes = jsonData.licenses;
+      console.log('Loaded license types from JSON:', licenseTypes);
+    }
+    if (jsonData.modifiers && Array.isArray(jsonData.modifiers) && jsonData.modifiers.length > 0) {
+      modifierTypes = jsonData.modifiers;
+      console.log('Loaded modifier types from JSON:', modifierTypes);
+    }
+  } else {
+    console.warn('Warning: license-data.json not found. Using default hardcoded values.');
+  }
+} catch (err) {
+  console.error('Error loading license data from JSON:', err);
+  console.warn('Using default hardcoded values instead.');
+}
 
 // Output directory setup
 const outputDir = path.join(__dirname, '..', 'assets', 'images', 'licenses');
