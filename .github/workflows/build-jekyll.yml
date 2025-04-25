@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # or your default branch name
+  workflow_dispatch: # Allows manual triggering of the workflow from GitHub's UI
 
 jobs:
   build_and_deploy:
