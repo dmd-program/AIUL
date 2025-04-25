@@ -465,6 +465,33 @@ button {
   }
 }
 
+/* Disclaimer page styles */
+.disclaimer-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $psu-light-gray;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  h3 {
+    color: $psu-blue;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  ul {
+    padding-left: 1.5rem;
+    
+    li {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+  }
+}
+
 footer {
   text-align: center;
   padding: 1.5rem;
@@ -480,6 +507,24 @@ footer {
     
     &:hover {
       color: $psu-yellow;
+    }
+  }
+  
+  .footer-links {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba($psu-light-blue, 0.3);
+    
+    a {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      color: $psu-medium-blue;
+      font-size: 0.9rem;
+      
+      &:hover {
+        color: $psu-blue;
+        text-decoration: underline;
+      }
     }
   }
 }
