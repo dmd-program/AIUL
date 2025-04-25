@@ -329,6 +329,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     modifierName = 'Mixed Media';
                     modifierDesc = 'This applies to projects combining multiple media types.';
                     break;
+                case 'CO':
+                    modifierName = 'Code';
+                    modifierDesc = 'This applies specifically to code and software development.';
+                    break;
             }
         }
         
@@ -413,6 +417,7 @@ Please see the <a href="${licenseUrl}" target="_blank" rel="license">AI Usage Li
             case '3D': return '3D Design';
             case 'TR': return 'Traditional Media';
             case 'MX': return 'Mixed Media';
+            case 'CO': return 'Code';
             default: return 'Unknown';
         }
     }

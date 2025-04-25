@@ -41,7 +41,7 @@ const downloadMessage = new MockElement();
 
 // Define license types and modifiers
 const licenseTypes = ['NA', 'WA', 'CD', 'TC', 'DP', 'IU'];
-const modifierTypes = ['WR', 'IM', 'VD', 'AU', '3D', 'TR', 'MX'];
+const modifierTypes = ['WR', 'IM', 'VD', 'AU', '3D', 'TR', 'MX', 'CO'];
 
 // Output directory setup
 const outputDir = path.join(__dirname, '..', 'assets', 'images', 'licenses');
