@@ -242,13 +242,19 @@ async function generateAllLicenseImages() {
   console.log('Generating license images...');
   
   // Generate base license images
-  for (const licenseCode of licenseTypes) {
+  for (const license of licenseTypes) {
+    // Handle both string and object formats for license codes
+    const licenseCode = typeof license === 'string' ? license : license.code;
+    
     const outputPath = path.join(outputDir, `aiul-${licenseCode.toLowerCase()}.png`);
     const svgContent = createSVG(licenseCode, null, true);
     await generatePNGFromSVG(svgContent, outputPath);
     
     // Generate license + modifier combinations
-    for (const modifierCode of modifierTypes) {
+    for (const modifier of modifierTypes) {
+      // Handle both string and object formats for modifier codes
+      const modifierCode = typeof modifier === 'string' ? modifier : modifier.code;
+      
       const modOutputPath = path.join(outputDir, `aiul-${licenseCode.toLowerCase()}-${modifierCode.toLowerCase()}.png`);
       const modSvgContent = createSVG(licenseCode, modifierCode, true);
       await generatePNGFromSVG(modSvgContent, modOutputPath);
