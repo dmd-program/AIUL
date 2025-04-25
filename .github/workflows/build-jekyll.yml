@@ -18,8 +18,18 @@ jobs:
           ruby-version: '3.2' # Use your Ruby version here
           bundler-cache: true
 
+      - name: Check for Gemfile and rename if needed
+        run: |
+          if [ -f "gemfile" ] && [ ! -f "Gemfile" ]; then
+            echo "Renaming gemfile to Gemfile for compatibility"
+            mv gemfile Gemfile
+          fi
+
       - name: Install dependencies
         run: bundle install
+
+      - name: Install Node.js dependencies
+        run: npm ci || npm install
 
       - name: Build Jekyll site
         run: bundle exec jekyll build
